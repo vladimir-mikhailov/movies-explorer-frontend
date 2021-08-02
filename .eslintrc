@@ -1,0 +1,50 @@
+{
+  "env": {
+    "es2021": true,
+    "jest": true,
+    "browser": true
+  },
+  "extends": [
+    "airbnb",
+    "airbnb/hooks",
+    "prettier"
+  ],
+  "plugins": [
+    "prettier"
+  ],
+  "rules": {
+    "react/jsx-uses-react": "off",
+    "react/react-in-jsx-scope": "off",
+    "react/jsx-filename-extension": [
+      1,
+      {
+        "extensions": [
+          ".js",
+          ".jsx"
+        ]
+      }
+    ],
+    "react/prop-types": "off",
+    "no-underscore-dangle": "off",
+    "import/imports-first": [
+      "error",
+      "absolute-first"
+    ],
+    "import/newline-after-import": "error",
+    "import/prefer-default-export": "off",
+    "semi": "error"
+  },
+  "globals": {
+    "window": true,
+    "document": true,
+    "localStorage": true,
+    "FormData": true,
+    "FileReader": true,
+    "Blob": true,
+    "navigator": true,
+    "Headers": true,
+    "Request": true,
+    "fetch": true
+  },
+  "parser": "react-scripts/node_modules/babel-eslint"
+}
