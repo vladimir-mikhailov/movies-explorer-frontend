@@ -1,3 +1,3 @@
-const handleResponse = (res) => res.ok ? res.json() : Promise.reject(res);
+const handleResponse = (res) => res.ok ? res.json() : res.json().then(Promise.reject.bind(Promise));
 
 export default handleResponse;
