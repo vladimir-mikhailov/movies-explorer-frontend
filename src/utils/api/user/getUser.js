@@ -1,5 +1,5 @@
-import handleResponse from './handleResponse';
-import { baseUrl } from '../config';
+import handleResponse from '../handleResponse';
+import { baseUrl } from '../../config';
 
 const getUser = async () => {
   const res = await fetch(`${baseUrl}/users/me`, {

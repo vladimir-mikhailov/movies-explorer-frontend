@@ -10,9 +10,11 @@ import Register from '../user/Register/Register';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import { LoggedInContext } from '../../contexts/LoggedInContext';
 // import { IsSavingContext } from '../../contexts/IsSavingContext';
-import getUser from '../../utils/api/getUser';
+import getUser from '../../utils/api/user/getUser';
+// import updateUser from '../../utils/api/updateUser';
+// import logout from '../../utils/api/logout';
+// import register from '../../utils/api/register';
 // import login from '../../utils/api/login';
-import register from '../../utils/api/register';
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -22,12 +24,6 @@ function App() {
   const isLoggedIn = async () => {
     try {
       const user = await getUser();
-      // eslint-disable-next-line no-console
-      console.log(
-        `user id: ${user._id}
-user name: ${user.name}
-user email: ${user.email}`
-      );
 
       if (user?._id) {
         setLoggedIn(true);
@@ -39,26 +35,14 @@ user email: ${user.email}`
     } catch (e) {
       setLoggedIn(false);
       setCurrentUser({});
-      // eslint-disable-next-line no-console
-      console.log(e);
     }
   };
 
-  useEffect(() => {
-    const name = 'Vladimir';
-    const email = 'vladimir@mikhailov.in';
-    const password = 'Zaloopa123';
-    register({ email, name, password })
-      .then((r) => {
-        // eslint-disable-next-line no-console
-        console.log(r);
-        // eslint-disable-next-line no-console
-      })
-      // eslint-disable-next-line no-console
-      .catch((e) => console.log(e));
-  }, []);
-
   useEffect(() => isLoggedIn(), []);
+
+  // const handleRegister = () => {
+  //
+  // };
 
   return (
     <BrowserRouter>

@@ -1,5 +1,5 @@
-import handleResponse from './handleResponse';
-import { baseUrl } from '../config';
+import handleResponse from '../handleResponse';
+import { baseUrl } from '../../config';
 
 const register = async ({ email, name, password }) => {
   const res = await fetch(`${baseUrl}/signup`, {
