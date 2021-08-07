@@ -11,7 +11,8 @@ import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import { LoggedInContext } from '../../contexts/LoggedInContext';
 // import { IsSavingContext } from '../../contexts/IsSavingContext';
 import getUser from '../../utils/api/getUser';
-import login from '../../utils/api/login';
+// import login from '../../utils/api/login';
+import register from '../../utils/api/register';
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -22,7 +23,11 @@ function App() {
     try {
       const user = await getUser();
       // eslint-disable-next-line no-console
-      console.log(`user: ${user}`);
+      console.log(
+        `user id: ${user._id}
+user name: ${user.name}
+user email: ${user.email}`
+      );
 
       if (user?._id) {
         setLoggedIn(true);
@@ -30,28 +35,30 @@ function App() {
         return;
       }
       setLoggedIn(false);
+      setCurrentUser({});
     } catch (e) {
       setLoggedIn(false);
+      setCurrentUser({});
       // eslint-disable-next-line no-console
       console.log(e);
     }
   };
 
   useEffect(() => {
+    const name = 'Vladimir';
     const email = 'vladimir@mikhailov.in';
     const password = 'Zaloopa123';
-    login({ email, password })
+    register({ email, name, password })
       .then((r) => {
         // eslint-disable-next-line no-console
         console.log(r);
         // eslint-disable-next-line no-console
-        isLoggedIn().then(res=>res).catch(e => console.log(e));
       })
       // eslint-disable-next-line no-console
       .catch((e) => console.log(e));
   }, []);
 
-  // useEffect(() => isLoggedIn(), []);
+  useEffect(() => isLoggedIn(), []);
 
   return (
     <BrowserRouter>
