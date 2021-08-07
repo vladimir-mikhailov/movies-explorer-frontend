@@ -4,7 +4,7 @@ import {
   Switch,
   Redirect,
   BrowserRouter,
-  useHistory,
+  // useHistory,
 } from 'react-router-dom';
 import './App.css';
 import Login from '../user/Login/Login';
@@ -20,14 +20,14 @@ import register from '../../utils/api/user/register';
 import getUser from '../../utils/api/user/getUser';
 // import updateUser from '../../utils/api/updateUser';
 import login from '../../utils/api/user/login';
-import logout from '../../utils/api/user/logout';
+// import logout from '../../utils/api/user/logout';
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
   const [isSaving, setIsSaving] = useState(false);
 
-  const history = useHistory();
+  // const history = useHistory();
 
   const isLoggedIn = async () => {
     try {
@@ -90,19 +90,19 @@ function App() {
   //  todo handleUpdateUser
   // };
 
-  const handleLogout = async () => {
-    try {
-      const res = await logout();
-
-      if (res) {
-        setCurrentUser({});
-        setLoggedIn(false);
-        history.push('/signin');
-      }
-    } catch (e) {
-      // todo показать ошибку логаута
-    }
-  };
+  // const handleLogout = async () => {
+  //   try {
+  //     const res = await logout();
+  //
+  //     if (res) {
+  //       setCurrentUser({});
+  //       setLoggedIn(false);
+  //       history.push('/signin');
+  //     }
+  //   } catch (e) {
+  //     // todo показать ошибку логаута
+  //   }
+  // };
 
   const closeAllPopups = () => {};
 
@@ -140,10 +140,6 @@ function App() {
                   isSaving={isSaving}
                   isPopup={false}
                 />
-              </Route>
-
-              <Route path='/signout'>
-                {loggedIn && handleLogout() }
               </Route>
 
               <ProtectedRoute
