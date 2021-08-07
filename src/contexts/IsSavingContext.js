@@ -1,3 +1,5 @@
 import { createContext } from 'react';
 
-export const IsSavingContext = createContext(false);
+const IsSavingContext = createContext(false);
+
+export default IsSavingContext;
