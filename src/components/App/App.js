@@ -11,7 +11,6 @@ import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import { LoggedInContext } from '../../contexts/LoggedInContext';
 // import { IsSavingContext } from '../../contexts/IsSavingContext';
 import getUser from '../../utils/api/user/getUser';
-import getAllMovies from '../../utils/api/moviesCatalog/getAllMovies';
 // import updateUser from '../../utils/api/updateUser';
 // import logout from '../../utils/api/logout';
 // import register from '../../utils/api/register';
