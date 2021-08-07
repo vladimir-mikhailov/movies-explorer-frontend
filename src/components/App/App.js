@@ -1,5 +1,11 @@
 import { useState, useEffect } from 'react';
-import { Route, Switch, Redirect, BrowserRouter } from 'react-router-dom';
+import {
+  Route,
+  Switch,
+  Redirect,
+  BrowserRouter,
+  useHistory,
+} from 'react-router-dom';
 import './App.css';
 import Login from '../user/Login/Login';
 import Main from '../main/Main/Main';
@@ -12,15 +18,16 @@ import LoggedInContext from '../../contexts/LoggedInContext';
 import IsSavingContext from '../../contexts/IsSavingContext';
 import register from '../../utils/api/user/register';
 import getUser from '../../utils/api/user/getUser';
-// import getUser from '../../utils/api/user/getUser';
 // import updateUser from '../../utils/api/updateUser';
-// import logout from '../../utils/api/logout';
 import login from '../../utils/api/user/login';
+import logout from '../../utils/api/user/logout';
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
   const [isSaving, setIsSaving] = useState(false);
+
+  const history = useHistory();
 
   const isLoggedIn = async () => {
     try {
@@ -58,7 +65,6 @@ function App() {
       setLoggedIn(false);
       // todo показать ошибку логина
     }
-
   };
 
   const handleRegister = async ({ email, name, password }) => {
@@ -84,13 +90,21 @@ function App() {
   //  todo handleUpdateUser
   // };
 
-  // const handleLogout = async () => {
-  // todo handleLogout
-  // };
+  const handleLogout = async () => {
+    try {
+      const res = await logout();
 
-  const closeAllPopups = () => {
-
+      if (res) {
+        setCurrentUser({});
+        setLoggedIn(false);
+        history.push('/signin');
+      }
+    } catch (e) {
+      // todo показать ошибку логаута
+    }
   };
+
+  const closeAllPopups = () => {};
 
   useEffect(() => {
     const handleEscClose = (e) => {
@@ -111,7 +125,7 @@ function App() {
               </Route>
 
               <Route path='/signup'>
-                {loggedIn && <Redirect to='/' />}
+                {loggedIn && <Redirect to='/movies' />}
                 <Register
                   handleRegister={handleRegister}
                   isSaving={isSaving}
@@ -120,12 +134,16 @@ function App() {
               </Route>
 
               <Route path='/signin'>
-                {loggedIn && <Redirect to='/' />}
+                {loggedIn && <Redirect to='/movies' />}
                 <Login
                   handleLogin={handleLogin}
                   isSaving={isSaving}
                   isPopup={false}
                 />
+              </Route>
+
+              <Route path='/signout'>
+                {loggedIn && handleLogout() }
               </Route>
 
               <ProtectedRoute
@@ -140,11 +158,9 @@ function App() {
                 loggedIn={loggedIn}
               />
 
-              <ProtectedRoute
-                path='*'
-                component={Profile}
-                loggedIn={loggedIn}
-              />
+              <Route path='*'>
+                <Main />
+              </Route>
             </Switch>
           </IsSavingContext.Provider>
         </LoggedInContext.Provider>
