@@ -40,6 +40,7 @@ function App() {
 
   useEffect(() => isLoggedIn(), []);
 
+
   // const handleRegister = () => {
   //
   // };
@@ -55,6 +56,7 @@ function App() {
             </Route>
 
             <Route path='/signup'>
+              {loggedIn && <Redirect to='/' />}
               <Register
                 // handleRegister={handleRegister}
                 // isSaving={isSaving}
