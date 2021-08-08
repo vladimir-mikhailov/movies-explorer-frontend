@@ -49,6 +49,7 @@ function App() {
   useEffect(() => isLoggedIn(), []);
 
   const handleLogin = async ({ email, password }) => {
+
     try {
       setIsSaving(true);
 
@@ -66,6 +67,12 @@ function App() {
       // todo показать ошибку логина
     }
   };
+
+  // useEffect(() => {
+  //   const email = 'vladimir@mikhailov.in';
+  //   const password = 'Zaloopa123';
+  //   handleLogin({ email, password });
+  // }, []);
 
   const handleRegister = async ({ email, name, password }) => {
     try {
