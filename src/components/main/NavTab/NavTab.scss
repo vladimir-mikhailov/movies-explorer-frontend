@@ -10,7 +10,7 @@
 
   list-style: none;
   padding: 0;
-  margin: 24px auto;
+  margin: 25px auto;
 }
 
 .navtab__menu-list-item {
@@ -30,9 +30,6 @@
 }
 
 @media screen and (min-width: 768px) {
-  .navtab__menu-list {
-    margin: 24px auto;
-  }
 
   .navtab__menu-list-item {
     margin-left: 40px;

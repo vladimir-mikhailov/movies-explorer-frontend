@@ -1,1 +1,1 @@
-{"version":3,"sourceRoot":"","sources":["NavTab.scss","../../../styles/design-scheme.scss"],"names":[],"mappings":"AAEA;EACE,kBCUsB;;;ADPxB;EACE;EACA;EAEA;EACA;EACA;;;AAGF;EACE;EACA;EACA;EACA;;;AAGF;EACE;;;AAGF;EACE,OCtBc;EDuBd;;;AAGF;EACE;IACE;;;EAGF;IACE;IACA","file":"NavTab.css"}
+{"version":3,"sourceRoot":"","sources":["NavTab.scss","../../../styles/design-scheme.scss"],"names":[],"mappings":"AAEA;EACE,kBCUsB;;;ADPxB;EACE;EACA;EAEA;EACA;EACA;;;AAGF;EACE;EACA;EACA;EACA;;;AAGF;EACE;;;AAGF;EACE,OCtBc;EDuBd;;;AAGF;EAEE;IACE;IACA","file":"NavTab.css"}
