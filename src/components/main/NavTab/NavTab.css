@@ -1,13 +1,20 @@
 .navtab {
   background-color: #272727;
+  display: flex;
+  justify-content: center;
 }
 
 .navtab__menu-list {
   display: flex;
   flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
   list-style: none;
   padding: 0;
   margin: 25px auto;
+  box-sizing: border-box;
+  width: calc(100vw - 20px);
+  max-width: calc(768px - 40px);
 }
 
 .navtab__menu-list-item {
@@ -27,6 +34,11 @@
 }
 
 @media screen and (min-width: 768px) {
+  .navtab__menu-list {
+    width: calc(100vw - 40px);
+    max-width: calc(1280px - 140px);
+  }
+
   .navtab__menu-list-item {
     margin-left: 40px;
     font-size: 13px;

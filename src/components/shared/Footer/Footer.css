@@ -99,10 +99,5 @@
     margin: 0;
   }
 }
-@media screen and (min-width: 1280px) {
-  .footer__container {
-    margin: 79px auto 0;
-  }
-}
 
 /*# sourceMappingURL=Footer.css.map */

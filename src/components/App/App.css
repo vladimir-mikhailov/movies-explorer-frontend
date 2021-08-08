@@ -18,12 +18,12 @@
 
 .section {
   display: flex;
+  align-items: center;
   width: 100%;
 }
 
 .section__container {
   display: flex;
-  justify-content: flex-start;
   flex-flow: column nowrap;
   max-width: 1140px;
   margin: 0 auto;
