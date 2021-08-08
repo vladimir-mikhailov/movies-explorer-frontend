@@ -1,0 +1,7 @@
+@use '../../../styles/design-scheme';
+
+.hero {
+  background-color: design-scheme.$hero-background-color;
+  height: 664px;
+  width: 100%;
+}

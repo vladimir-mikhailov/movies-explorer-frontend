@@ -1,5 +1,5 @@
 import handleResponse from '../handleResponse';
-import { baseUrl } from '../../config';
+import { baseUrl } from '../apiConfig';
 
 const login = async ({ email, password }) => {
   const res = await fetch(`${baseUrl}/signin`, {

@@ -1,3 +1,8 @@
+@use '../../../styles/design-scheme';
+
+$preloader-size: 2.5em;
+$preloader-border-radius: $preloader-size / 2;
+
 @keyframes preloader-inside-white {
   0% {
     -webkit-transform: scale(0, 0);
@@ -14,6 +19,7 @@
     transform: scale(1, 1);
   }
 }
+
 @keyframes preloader-inside-colored {
   0% {
     -webkit-transform: scale(0, 0);
@@ -37,6 +43,7 @@
     transform: scale(1, 1);
   }
 }
+
 .preloader {
   display: flex;
   align-items: center;
@@ -49,41 +56,39 @@
 }
 
 .preloader__container {
-  width: 2.5em;
-  height: 2.5em;
+  width: $preloader-size;
+  height: $preloader-size;
   position: relative;
 }
 
 .preloader__round {
-  width: 2.5em;
-  height: 2.5em;
+  width: $preloader-size;
+  height: $preloader-size;
   position: absolute;
   top: 0;
   left: 0;
-  background: #3DDC84;
-  border-radius: 1.25em;
+  background: design-scheme.$accent-color;
+  border-radius: $preloader-border-radius;
 }
 
 .preloader__round::after,
 .preloader__round::before {
-  content: "";
-  width: 2.5em;
-  height: 2.5em;
+  content: '';
+  width: $preloader-size;
+  height: $preloader-size;
   position: absolute;
   top: 0;
   left: 0;
-  border-radius: 1.25em;
+  border-radius: $preloader-border-radius;
 }
 
 .preloader__round::after {
-  background: #FFF;
+  background: design-scheme.$primary-color;
   animation: preloader-inside-white 1s ease-in-out infinite;
 }
 
 .preloader__round::before {
   z-index: 10;
-  background: #3DDC84;
+  background: design-scheme.$accent-color;
   animation: preloader-inside-colored 1s ease-in-out infinite;
 }
-
-/*# sourceMappingURL=Preloader.css.map */

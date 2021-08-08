@@ -7,7 +7,9 @@ const Techs = () => {
   }, []);
 
   return (
+    <section id='techs'>
       <></>
+    </section>
   );
 };
 

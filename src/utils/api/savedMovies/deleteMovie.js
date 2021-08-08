@@ -1,5 +1,5 @@
 import handleResponse from '../handleResponse';
-import { baseUrl } from '../../config';
+import { baseUrl } from '../apiConfig';
 
 const deleteMovie = async (movieId) => {
   const res = await fetch(`${baseUrl}/movies/${movieId}`, {

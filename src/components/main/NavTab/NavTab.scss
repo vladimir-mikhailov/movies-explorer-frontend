@@ -1,10 +1,13 @@
+@use '../../../styles/design-scheme';
+
 .navtab {
-  background-color: #272727;
+  background-color: design-scheme.$background-color-gray;
 }
 
 .navtab__menu-list {
   display: flex;
   flex-flow: row nowrap;
+
   list-style: none;
   padding: 0;
   margin: 24px auto;
@@ -22,7 +25,7 @@
 }
 
 .navtab__menu-link {
-  color: #FFF;
+  color: design-scheme.$primary-color;
   text-underline-position: under;
 }
 
@@ -36,5 +39,3 @@
     font-size: 13px;
   }
 }
-
-/*# sourceMappingURL=NavTab.css.map */

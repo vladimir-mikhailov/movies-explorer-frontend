@@ -1,5 +1,5 @@
 import handleResponse from '../handleResponse';
-import { baseUrl } from '../../config';
+import { baseUrl } from '../apiConfig';
 
 const getMovies = async () => {
   const res = await fetch(`${baseUrl}/movies`, {

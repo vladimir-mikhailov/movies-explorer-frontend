@@ -1,5 +1,5 @@
 import handleResponse from '../handleResponse';
-import { baseUrl } from '../../config';
+import { baseUrl } from '../apiConfig';
 
 const updateUser = async ({ email, name }) => {
   const res = await fetch(`${baseUrl}/users/me`, {

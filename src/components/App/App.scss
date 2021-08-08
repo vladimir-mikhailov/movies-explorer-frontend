@@ -1,20 +1,39 @@
+@use '../../styles/design-scheme';
+
 .page {
+  // Font Smoothing
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
+
+  // Text Size Adjust
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
   -moz-text-size-adjust: 100%;
+
+  // Kerning and Ligatures Rendering
   text-rendering: optimizeLegibility;
-  font-family: "Inter", Arial, Helvetica, sans-serif;
-  background-color: #202020;
-  color: #FFF;
-  min-width: 320px;
+
+  // Font
+  font-family: design-scheme.$font-stack;
+
+  // Color
+  background-color: design-scheme.$background-color-black;
+  color: design-scheme.$primary-color;
+
+  // Size
+  min-width: design-scheme.$min-width;
+
+  // Reset Default Styles
   margin: 0 auto;
+
+  // Root Flex Container
   min-height: 100vh;
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
 }
+
+// Common
 
 .section {
   display: flex;
@@ -31,8 +50,10 @@
   flex-flow: column nowrap;
 }
 
+.header {
+
+}
+
 .main {
   flex: 1;
 }
-
-/*# sourceMappingURL=App.css.map */

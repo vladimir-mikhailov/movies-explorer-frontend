@@ -7,7 +7,9 @@ const AboutProject = () => {
   }, []);
 
   return (
+    <section id='about-project'>
       <></>
+    </section>
   );
 };
 

@@ -1,5 +1,5 @@
 import handleResponse from '../handleResponse';
-import { beatFilmsApiUrl } from '../../config';
+import { beatFilmsApiUrl } from '../apiConfig';
 
 const getAllMovies = async () => {
   const res = await fetch(beatFilmsApiUrl);

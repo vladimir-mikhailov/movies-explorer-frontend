@@ -7,20 +7,20 @@ import {
   // useHistory,
 } from 'react-router-dom';
 import './App.css';
+import CurrentUserContext from '../../contexts/CurrentUserContext';
+import LoggedInContext from '../../contexts/LoggedInContext';
+import IsSavingContext from '../../contexts/IsSavingContext';
+import getUser from '../../utils/api/user/getUser';
+import login from '../../utils/api/user/login';
+import register from '../../utils/api/user/register';
+import updateUser from '../../utils/api/user/updateUser';
 import Login from '../user/Login/Login';
 import Main from '../main/Main/Main';
 import Movies from '../movies/Movies/Movies';
 import Profile from '../user/Profile/Profile';
 import ProtectedRoute from '../shared/ProtectedRoute/ProtectedRoute';
 import Register from '../user/Register/Register';
-import CurrentUserContext from '../../contexts/CurrentUserContext';
-import LoggedInContext from '../../contexts/LoggedInContext';
-import IsSavingContext from '../../contexts/IsSavingContext';
-import register from '../../utils/api/user/register';
-import getUser from '../../utils/api/user/getUser';
-import updateUser from '../../utils/api/user/updateUser';
-import login from '../../utils/api/user/login';
-
+import SavedMovies from '../movies/SavedMovies/SavedMovies';
 // import logout from '../../utils/api/user/logout';
 
 function App() {
@@ -172,6 +172,12 @@ function App() {
               <ProtectedRoute
                 path='/movies'
                 component={Movies}
+                loggedIn={loggedIn}
+              />
+
+              <ProtectedRoute
+                path='/saved-movies'
+                component={SavedMovies}
                 loggedIn={loggedIn}
               />
 
