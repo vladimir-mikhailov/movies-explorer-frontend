@@ -18,7 +18,7 @@ import LoggedInContext from '../../contexts/LoggedInContext';
 import IsSavingContext from '../../contexts/IsSavingContext';
 import register from '../../utils/api/user/register';
 import getUser from '../../utils/api/user/getUser';
-// import updateUser from '../../utils/api/updateUser';
+import updateUser from '../../utils/api/user/updateUser';
 import login from '../../utils/api/user/login';
 // import logout from '../../utils/api/user/logout';
 
@@ -76,7 +76,7 @@ function App() {
       if (newUser) {
         setIsSaving(false);
 
-        // todo показать сообщение об успещной регистрации
+        // todo показать сообщение об успешной регистрации
 
         await handleLogin({ name, password });
       }
@@ -86,9 +86,22 @@ function App() {
     }
   };
 
-  // const handleUpdateUser = async ({ email, name }) => {
-  //  todo handleUpdateUser
-  // };
+  const handleUpdateUser = async ({ email, name }) => {
+   try {
+     setIsSaving(true);
+
+     const updatedUser = await updateUser({ email, name });
+
+     if (updatedUser) {
+       setIsSaving(false);
+       setCurrentUser(updatedUser);
+       // todo показать сообщение об успешном изменении пользователя
+     }
+   } catch (e) {
+     setIsSaving(false);
+     // todo показать ошибку изменения данных пользователя
+   }
+  };
 
   // const handleLogout = async () => {
   //   try {
@@ -145,6 +158,7 @@ function App() {
               <ProtectedRoute
                 path='/profile'
                 component={Profile}
+                handleUpdateUser={handleUpdateUser}
                 loggedIn={loggedIn}
               />
 
