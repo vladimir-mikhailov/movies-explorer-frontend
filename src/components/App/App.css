@@ -1,0 +1,33 @@
+/* Page Root */
+.page {
+  /* Font smoothing */
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+
+  /* Text size adjust */
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+
+  /* Kerning and Ligatures Rendering */
+  text-rendering: optimizeLegibility;
+
+  /* Font */
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
+
+  /* Color */
+  background-color: #000;
+  color: #fff;
+
+  /* Size */
+  /* max-width: 1280px; */
+  min-width: 320px;
+
+  /* Reset Default Styles */
+  margin: 0 auto;
+
+  /* Sticky Footer */
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}

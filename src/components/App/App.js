@@ -20,6 +20,7 @@ import register from '../../utils/api/user/register';
 import getUser from '../../utils/api/user/getUser';
 import updateUser from '../../utils/api/user/updateUser';
 import login from '../../utils/api/user/login';
+
 // import logout from '../../utils/api/user/logout';
 
 function App() {
@@ -49,7 +50,6 @@ function App() {
   useEffect(() => isLoggedIn(), []);
 
   const handleLogin = async ({ email, password }) => {
-
     try {
       setIsSaving(true);
 
@@ -94,20 +94,20 @@ function App() {
   };
 
   const handleUpdateUser = async ({ email, name }) => {
-   try {
-     setIsSaving(true);
+    try {
+      setIsSaving(true);
 
-     const updatedUser = await updateUser({ email, name });
+      const updatedUser = await updateUser({ email, name });
 
-     if (updatedUser) {
-       setIsSaving(false);
-       setCurrentUser(updatedUser);
-       // todo показать сообщение об успешном изменении пользователя
-     }
-   } catch (e) {
-     setIsSaving(false);
-     // todo показать ошибку изменения данных пользователя
-   }
+      if (updatedUser) {
+        setIsSaving(false);
+        setCurrentUser(updatedUser);
+        // todo показать сообщение об успешном изменении пользователя
+      }
+    } catch (e) {
+      setIsSaving(false);
+      // todo показать ошибку изменения данных пользователя
+    }
   };
 
   // const handleLogout = async () => {
