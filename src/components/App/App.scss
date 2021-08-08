@@ -37,17 +37,15 @@
 
 .section {
   display: flex;
-  flex-flow: column nowrap;
-  justify-content: flex-start;
-  align-items: center;
   width: 100%;
-  margin: 0 auto;
 }
 
 .section__container {
   display: flex;
   justify-content: flex-start;
   flex-flow: column nowrap;
+  max-width: design-scheme.$max-width;
+  margin: 0 auto;
 }
 
 .header {
