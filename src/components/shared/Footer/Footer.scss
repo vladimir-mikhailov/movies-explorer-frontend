@@ -14,9 +14,6 @@
   display: flex;
   flex-flow: column nowrap;
   margin: 79px auto 10px;
-  box-sizing: border-box;
-  width: calc(100vw - 20px);
-  max-width: calc(768px - 40px);
 }
 
 .footer__heading {
@@ -73,8 +70,6 @@
 
   .footer__container {
     margin: 79px auto 0;
-    width: calc(100vw - 40px);
-    max-width: calc(1280px - 140px);
   }
 
   .footer__heading {

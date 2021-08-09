@@ -6,7 +6,7 @@ const Footer = () => {
 
   return (
     <footer className='section footer'>
-      <div className='section__container footer__container'>
+      <div className='section__container section__container_wide footer__container'>
         <h4 className='footer__heading'>
           Учебный проект Яндекс.Практикум х BeatFilm.
         </h4>

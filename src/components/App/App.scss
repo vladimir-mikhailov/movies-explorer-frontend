@@ -46,6 +46,19 @@
   flex-flow: column nowrap;
   max-width: design-scheme.$max-width;
   margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.section__container_wide {
+  width: calc(100vw - 20px);
+  max-width: calc(768px - 40px);
+}
+
+@media screen and (min-width: 768px) {
+  .section__container_wide {
+    width: calc(100vw - 40px);
+    max-width: calc(1280px - 140px);
+  }
 }
 
 .header {
