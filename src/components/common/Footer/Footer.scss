@@ -1,6 +1,10 @@
+@use '../../../styles/design-scheme';
+
 .footer {
+  // Липкий футер
   display: flex;
   flex-shrink: 0;
+
   font-size: 12px;
   line-height: 1.25;
   font-weight: 400;
@@ -13,7 +17,7 @@
 }
 
 .footer__heading {
-  color: #8B8B8B;
+  color: design-scheme.$secondary-color;
   margin: 0 auto 34px;
   padding: 0;
   font-weight: 400;
@@ -24,8 +28,12 @@
   flex-flow: column nowrap;
   align-items: center;
   width: 100%;
-  border-top: 1px solid #424242;
+  border-top: 1px solid design-scheme.$stroke-color-dark;
   box-sizing: border-box;
+}
+
+.footer__menu {
+  margin: 30px 0 0;
 }
 
 .footer__menu-list {
@@ -33,7 +41,7 @@
   flex-flow: column nowrap;
   justify-content: center;
   list-style: none;
-  margin: 30px 0 0;
+  margin: 0;
   padding: 0;
 }
 
@@ -46,22 +54,22 @@
 }
 
 .footer__menu-link {
-  color: #FFF;
+  color: design-scheme.$primary-color;
   text-decoration: none;
 }
 
 .footer__copyright {
-  color: #8B8B8B;
+  color: design-scheme.$secondary-color;
   margin: 30px 0 0;
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 425px) {
   .footer {
     font-size: 13px;
   }
 
   .footer__container {
-    margin: 79px auto 0;
+    margin-bottom: 0;
   }
 
   .footer__heading {
@@ -69,13 +77,17 @@
   }
 
   .footer__nav-container {
-    flex-flow: row-reverse nowrap;
+    flex-direction: row-reverse;
     justify-content: space-between;
     padding: 20px 0;
   }
 
+  .footer__menu {
+    margin: 0;
+  }
+
   .footer__menu-list {
-    flex-flow: row nowrap;
+    flex-direction: row;
     justify-content: flex-end;
     margin: 0;
   }
@@ -90,9 +102,7 @@
   }
 
   .footer__copyright {
-    color: #FFF;
+    color: design-scheme.$primary-color;
     margin: 0;
   }
 }
-
-/*# sourceMappingURL=Footer.css.map */

@@ -10,6 +10,8 @@ import './App.css';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 import LoggedInContext from '../../contexts/LoggedInContext';
 import IsSavingContext from '../../contexts/IsSavingContext';
+import isMenuPopupOpenContext from '../../contexts/isMenuPopupOpenContext';
+import setIsMenuPopupOpenContext from '../../contexts/setIsMenuPopupOpenContext';
 import getUser from '../../utils/api/user/getUser';
 import login from '../../utils/api/user/login';
 import register from '../../utils/api/user/register';
@@ -18,15 +20,18 @@ import Login from '../user/Login/Login';
 import Main from '../main/Main/Main';
 import Movies from '../movies/Movies/Movies';
 import Profile from '../user/Profile/Profile';
-import ProtectedRoute from '../shared/ProtectedRoute/ProtectedRoute';
+import ProtectedRoute from '../common/ProtectedRoute/ProtectedRoute';
 import Register from '../user/Register/Register';
 import SavedMovies from '../movies/SavedMovies/SavedMovies';
+import MenuPopup from '../popups/MenuPopup/MenuPopup';
+
 // import logout from '../../utils/api/user/logout';
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
   const [isSaving, setIsSaving] = useState(false);
+  const [isMenuPopupOpen, setIsMenuPopupOpen] = useState(false);
 
   // const history = useHistory();
 
@@ -124,7 +129,9 @@ function App() {
   //   }
   // };
 
-  const closeAllPopups = () => {};
+  const closeAllPopups = () => {
+    setIsMenuPopupOpen(false);
+  };
 
   useEffect(() => {
     const handleEscClose = (e) => {
@@ -139,52 +146,57 @@ function App() {
       <CurrentUserContext.Provider value={currentUser}>
         <LoggedInContext.Provider value={loggedIn}>
           <IsSavingContext.Provider value={isSaving}>
-            <Switch>
-              <Route exact path='/'>
-                <Main />
-              </Route>
+            <setIsMenuPopupOpenContext.Provider value={setIsMenuPopupOpen}>
+              <isMenuPopupOpenContext.Provider value={isMenuPopupOpen}>
+                <Switch>
+                  <Route exact path='/'>
+                    <Main />
+                  </Route>
 
-              <Route path='/signup'>
-                {loggedIn && <Redirect to='/movies' />}
-                <Register
-                  handleRegister={handleRegister}
-                  isSaving={isSaving}
-                  isPopup={false}
-                />
-              </Route>
+                  <Route path='/signup'>
+                    {loggedIn && <Redirect to='/movies' />}
+                    <Register
+                      handleRegister={handleRegister}
+                      isSaving={isSaving}
+                      isPopup={false}
+                    />
+                  </Route>
 
-              <Route path='/signin'>
-                {loggedIn && <Redirect to='/movies' />}
-                <Login
-                  handleLogin={handleLogin}
-                  isSaving={isSaving}
-                  isPopup={false}
-                />
-              </Route>
+                  <Route path='/signin'>
+                    {loggedIn && <Redirect to='/movies' />}
+                    <Login
+                      handleLogin={handleLogin}
+                      isSaving={isSaving}
+                      isPopup={false}
+                    />
+                  </Route>
 
-              <ProtectedRoute
-                path='/profile'
-                component={Profile}
-                handleUpdateUser={handleUpdateUser}
-                loggedIn={loggedIn}
-              />
+                  <ProtectedRoute
+                    path='/profile'
+                    component={Profile}
+                    handleUpdateUser={handleUpdateUser}
+                    loggedIn={loggedIn}
+                  />
 
-              <ProtectedRoute
-                path='/movies'
-                component={Movies}
-                loggedIn={loggedIn}
-              />
+                  <ProtectedRoute
+                    path='/movies'
+                    component={Movies}
+                    loggedIn={loggedIn}
+                  />
 
-              <ProtectedRoute
-                path='/saved-movies'
-                component={SavedMovies}
-                loggedIn={loggedIn}
-              />
+                  <ProtectedRoute
+                    path='/saved-movies'
+                    component={SavedMovies}
+                    loggedIn={loggedIn}
+                  />
 
-              <Route path='*'>
-                <Main />
-              </Route>
-            </Switch>
+                  <Route path='*'>
+                    <Main />
+                  </Route>
+                </Switch>
+                <MenuPopup isOpen={isMenuPopupOpen} onClose={closeAllPopups} />
+              </isMenuPopupOpenContext.Provider>
+            </setIsMenuPopupOpenContext.Provider>
           </IsSavingContext.Provider>
         </LoggedInContext.Provider>
       </CurrentUserContext.Provider>
