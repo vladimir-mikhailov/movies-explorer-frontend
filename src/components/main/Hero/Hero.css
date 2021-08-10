@@ -1,7 +1,9 @@
 .hero {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
   background-color: #073042;
-  height: 300px;
-  width: 100%;
+  min-height: 644px;
 }
 
 /*# sourceMappingURL=Hero.css.map */

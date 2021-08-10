@@ -1,6 +1,6 @@
 @use '../../../styles/design-scheme';
 
-$preloader-size: 2.5em;
+$preloader-size: design-scheme.$logo-size;
 $preloader-border-radius: $preloader-size / 2;
 
 @keyframes preloader-inside-white {
