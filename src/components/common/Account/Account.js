@@ -10,7 +10,7 @@ const Account = ({ withBurger, visibility }) => {
   const setIsMenuPopupOpen = useContext(setIsMenuPopupOpenContext);
   const isMenuPopupOpen = useContext(isMenuPopupOpenContext);
 
-  const accountClassName = withBurger ? 'account' :'account account_burger';
+  const accountClassName = withBurger ? 'account' : 'account account_burger';
 
   const handleBurgerClick = () => {
     if (isMenuPopupOpen) {
@@ -23,7 +23,7 @@ const Account = ({ withBurger, visibility }) => {
 
   return (
     <nav className={accountClassName}>
-      {isLoggedIn ? (
+      {isLoggedIn && (
         <>
           <Link
             className={`account__link account__link_visible-on_${visibility}`}
@@ -33,14 +33,18 @@ const Account = ({ withBurger, visibility }) => {
           </Link>
           {withBurger && (
             <button
-              className={`burger button${isMenuPopupOpen ? ' burger_open' : ''}`}
+              className={`burger button${
+                isMenuPopupOpen ? ' burger_open' : ''
+              }`}
               type='button'
               onClick={handleBurgerClick}
               aria-label='Меню'
             />
           )}
         </>
-      ) : (
+      )}
+
+      {isLoggedIn === false && (
         <>
           <Link className='account__auth-link' to='/signup'>
             Регистрация

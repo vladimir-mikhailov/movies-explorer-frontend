@@ -28,10 +28,11 @@ import MenuPopup from '../popups/MenuPopup/MenuPopup';
 // import logout from '../../utils/api/user/logout';
 
 function App() {
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(null);
   const [currentUser, setCurrentUser] = useState({});
   const [isSaving, setIsSaving] = useState(false);
   const [isMenuPopupOpen, setIsMenuPopupOpen] = useState(false);
+
 
   // const history = useHistory();
 
