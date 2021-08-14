@@ -7,10 +7,13 @@
   width: 100%;
   height: 100%;
   z-index: 100;
-  background: design-scheme.$background-color-black;
+  background: rgba(0, 0, 0, 0.3);
   transition: all .3s ease;
   opacity: 0;
   visibility: hidden;
+  display: flex;
+  flex-flow: row;
+  justify-content: flex-end;
 }
 
 .popup_open {
@@ -20,10 +23,12 @@
 
 .popup__container {
   height: 100%;
+  width: 100%;
   display: flex;
   flex-flow: column nowrap;
   justify-content: flex-start;
   align-items: center;
+  background: design-scheme.$background-color-black;
 }
 
 .popup__button-close {
@@ -47,5 +52,15 @@
 @media screen and (min-width: 425px) {
   .popup__button-close {
     margin: 29px 29px 0 0;
+  }
+}
+
+@media screen and (min-width: 520px) {
+  .popup {
+
+  }
+
+  .popup__container {
+    max-width: 520px;
   }
 }
