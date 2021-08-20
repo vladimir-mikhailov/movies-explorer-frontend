@@ -11,16 +11,16 @@
   letter-spacing: -0.04em;
   width: 300px;
   text-align: center;
-  grid-area: 1/1/2/2;
+  grid-area: 1 / 1 / 2 / 2;
   margin: 207px 0 246px;
 }
 
 .promo__logo {
   height: 248px;
   width: 248px;
-  background: url("../../../images/promo-logo-min.svg") no-repeat center;
+  background: url('../../../images/promo-logo-min.svg') no-repeat center;
   background-size: contain;
-  grid-area: 1/1/2/2;
+  grid-area: 1 / 1 / 2 / 2;
   margin: 142px 0 180px;
 }
 
@@ -39,6 +39,7 @@
     margin: 224px 0 240px;
   }
 }
+
 @media screen and (min-width: 1024px) {
   .promo__heading {
     margin: 184px 0 224px;
@@ -48,5 +49,3 @@
     margin: 82px 0 122px;
   }
 }
-
-/*# sourceMappingURL=Promo.css.map */
