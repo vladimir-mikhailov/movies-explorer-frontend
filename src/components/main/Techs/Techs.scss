@@ -1,3 +1,5 @@
+@use '../../../styles/design-scheme';
+
 .techs {
   display: flex;
   flex-flow: column nowrap;
@@ -43,12 +45,13 @@
   padding: 21px 0;
   margin: 0 auto;
   width: 84px;
-  background-color: #303030;
+  background-color: design-scheme.$tabs-background-color;
   border-radius: 10px;
   font-size: 12px;
   line-height: 15px;
   font-weight: 400;
 }
+
 
 @media screen and (min-width: 768px) {
   .techs__main-heading {
@@ -68,6 +71,7 @@
     max-width: 648px;
   }
 }
+
 @media screen and (min-width: 1024px) {
   .techs__main-heading {
     margin-top: 90px;
@@ -88,5 +92,3 @@
     line-height: 17px;
   }
 }
-
-/*# sourceMappingURL=Techs.css.map */
