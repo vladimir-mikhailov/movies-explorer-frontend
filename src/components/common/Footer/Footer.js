@@ -15,7 +15,7 @@ const Footer = () => {
             <ul className='footer__menu-list'>
               <li className='footer__menu-list-item'>
                 <a
-                  className='footer__menu-link'
+                  className='link footer__menu-link'
                   href='https://praktikum.yandex.ru'
                   target='_blank'
                   rel='nofollow noopener noreferrer'
@@ -25,7 +25,7 @@ const Footer = () => {
               </li>
               <li className='footer__menu-list-item'>
                 <a
-                  className='footer__menu-link'
+                  className='link footer__menu-link'
                   href='https://github.com/vladimir-mikhailov'
                   target='_blank'
                   rel='nofollow noopener noreferrer'
@@ -35,7 +35,7 @@ const Footer = () => {
               </li>
               <li className='footer__menu-list-item'>
                 <a
-                  className='footer__menu-link'
+                  className='link footer__menu-link'
                   href='https://www.facebook.com/mikhailov.vladimir/'
                   target='_blank'
                   rel='nofollow noopener noreferrer'

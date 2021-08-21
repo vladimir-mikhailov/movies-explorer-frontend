@@ -25,7 +25,7 @@ const Navigation = ({ visibility, showMain, type }) => {
           <li className={listItemClassName}>
             <NavLink
               exact to='/'
-              className='navigation__link'
+              className='link navigation__link'
               activeClassName={activeClassName}
             >
               Главная
@@ -35,7 +35,7 @@ const Navigation = ({ visibility, showMain, type }) => {
         <li className={listItemClassName}>
           <NavLink
             to='/movies'
-            className='navigation__link'
+            className='link navigation__link'
             activeClassName={activeClassName}
           >
             Фильмы
@@ -44,7 +44,7 @@ const Navigation = ({ visibility, showMain, type }) => {
         <li className={listItemClassName}>
           <NavLink
             to='/saved-movies'
-            className='navigation__link'
+            className='link navigation__link'
             activeClassName={activeClassName}
           >
             Сохранённые фильмы

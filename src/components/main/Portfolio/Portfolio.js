@@ -9,7 +9,7 @@ const Portfolio = () => (
           href='https://vladimir-mikhailov.github.io/how-to-learn/index.html'
           target='_blank'
           rel='nofollow noopener noreferrer'
-          className='portfolio-link'
+          className='link portfolio-link'
         >
           Научиться учиться
         </a>
@@ -19,7 +19,7 @@ const Portfolio = () => (
           href='https://vladimir-mikhailov.github.io/russian-travel/'
           target='_blank'
           rel='nofollow noopener noreferrer'
-          className='portfolio-link'
+          className='link portfolio-link'
         >
           Путешествия по России
         </a>
@@ -29,7 +29,7 @@ const Portfolio = () => (
           href='https://mikhailov.in/'
           target='_blank'
           rel='nofollow noopener noreferrer'
-          className='portfolio-link'
+          className='link portfolio-link'
         >
           Персональный мультиязычный сайт
         </a>

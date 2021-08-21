@@ -102,6 +102,14 @@
   background-color: design-scheme.$cta-color;
 }
 
+.link {
+  transition: opacity .3s;
+}
+
+.link:hover {
+  opacity: .7;
+}
+
 @media screen and (min-width: 768px) {
   .section__container {
     // Normal size

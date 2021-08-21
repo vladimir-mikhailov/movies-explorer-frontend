@@ -66,7 +66,7 @@ const AboutMe = () => {
                   href='https://www.facebook.com/mikhailov.vladimir/'
                   target='_blank'
                   rel='nofollow noopener noreferrer'
-                  className='about-me__photo-caption-link'
+                  className='link about-me__photo-caption-link'
                 >
                   Facebook
                 </a>
@@ -76,7 +76,7 @@ const AboutMe = () => {
                   href='https://github.com/vladimir-mikhailov'
                   target='_blank'
                   rel='nofollow noopener noreferrer'
-                  className='about-me__photo-caption-link'
+                  className='link about-me__photo-caption-link'
                 >
                   Github
                 </a>

@@ -26,14 +26,14 @@ const Account = ({ withBurger, visibility }) => {
       {isLoggedIn && (
         <>
           <Link
-            className={`account__link account__link_visible-on_${visibility}`}
+            className={`link account__link account__link_visible-on_${visibility}`}
             to='/profile'
           >
             Аккаунт
           </Link>
           {withBurger && (
             <button
-              className={`burger button${
+              className={`link burger button${
                 isMenuPopupOpen ? ' burger_open' : ''
               }`}
               type='button'
@@ -46,11 +46,11 @@ const Account = ({ withBurger, visibility }) => {
 
       {isLoggedIn === false && (
         <>
-          <Link className='account__auth-link' to='/signup'>
+          <Link className='link account__auth-link' to='/signup'>
             Регистрация
           </Link>
           <Link
-            className='account__auth-link account__auth-link_black button button_color_accent account__button'
+            className='link account__auth-link account__auth-link_black button button_color_accent account__button'
             to='/signin'
           >
             Войти
