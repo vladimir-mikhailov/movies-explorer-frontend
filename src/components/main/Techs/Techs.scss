@@ -4,6 +4,7 @@
   display: flex;
   flex-flow: column nowrap;
   justify-content: flex-start;
+  background-color: design-scheme.$background-color-black;
 }
 
 .techs__container {
@@ -36,6 +37,7 @@
   padding: 0;
   display: grid;
   grid-template-columns: repeat(auto-fill, 84px);
+  justify-content: center;
   gap: 10px;
   width: 100%;
   max-width: 178px;
@@ -52,8 +54,24 @@
   font-weight: 400;
 }
 
+@media screen and (min-width: 425px) {
+  .techs__list {
+    max-width: calc(178px + 94px);
+  }
+}
+
+@media screen and (min-width: 520px) {
+  .techs__list {
+    max-width: calc(178px + 94px * 2);
+  }
+}
+
 
 @media screen and (min-width: 768px) {
+  .techs {
+    background-color: design-scheme.$background-color-gray;
+  }
+
   .techs__main-heading {
     font-size: 50px;
     line-height: 58px;
