@@ -77,32 +77,6 @@
   background-color: #4285F4;
 }
 
-.burger {
-  display: none;
-}
-
-.burger_open {
-  display: none;
-}
-
-@media screen and (max-width: 768px) {
-  .burger {
-    display: flex;
-    height: 44px;
-    width: 44px;
-    background: url("../../images/burger-icon-min.svg") no-repeat center;
-  }
-
-  .burger_open {
-    display: none;
-  }
-}
-@media screen and (max-width: 425px) {
-  .burger {
-    height: 43px;
-    width: 40px;
-  }
-}
 @media screen and (min-width: 768px) {
   .section__container {
     width: calc(100vw - (50px * 2));
