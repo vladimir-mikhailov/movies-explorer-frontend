@@ -15,3 +15,12 @@
   src: url('Inter-Regular.woff2?v=3.15') format('woff2'),
     url('Inter-Regular.woff?v=3.15') format('woff');
 }
+
+@font-face {
+  font-family: 'Suisse Intl';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('SuisseIntl-Regular-WebTrial.woff2') format('woff2'),
+  url('SuisseIntl-Regular-WebTrial.woff') format('woff');
+}

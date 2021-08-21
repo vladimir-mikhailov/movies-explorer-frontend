@@ -1,3 +1,5 @@
+@use '../../../styles/design-scheme';
+
 .about-project {
   display: flex;
   flex-flow: column nowrap;
@@ -17,7 +19,7 @@
   padding: 0;
   margin: 60px auto;
   display: grid;
-  grid-template-columns: minmax(284px, 1fr);
+  grid-template-columns:  minmax(284px, 1fr);
   gap: 56px;
   width: 100%;
   justify-content: center;
@@ -25,6 +27,7 @@
 
 .about-project__list-item {
   width: 100%;
+  //max-width: 319px;
   margin: 0;
 }
 
@@ -45,11 +48,13 @@
 
 .about-project__progress-bar {
   width: 100%;
+  //max-width: 319px;
   display: grid;
   grid-template-columns: minmax(100px, max-content) 1fr;
   gap: 10px 0;
   justify-content: center;
   text-align: center;
+
   font-weight: 400;
   font-size: 11px;
   line-height: 13px;
@@ -60,23 +65,23 @@
 }
 
 .about-project__progress-bar-part_type_filled {
-  background-color: #3DDC84;
-  color: #000;
+  background-color: design-scheme.$accent-color;
+  color: design-scheme.$black-color;
 }
 
 .about-project__progress-bar-part_type_empty {
-  background-color: #303030;
+  background-color: design-scheme.$tabs-background-color;
 }
 
 .about-project__progress-bar-caption {
-  font-family: "Suisse Intl", "Inter", Arial, Helvetica, sans-serif;
-  color: #A0A0A0;
+  font-family: design-scheme.$font-secondary;
+  color: design-scheme.$caption-color;
   line-height: 14px;
 }
 
 @media screen and (min-width: 520px) {
   .about-project__list {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns:  repeat(2, 1fr);
     gap: 30px;
   }
 
@@ -84,6 +89,7 @@
     grid-template-columns: 140px 1fr;
   }
 }
+
 @media screen and (min-width: 768px) {
   .about-project {
     margin-bottom: 90px;
@@ -119,6 +125,7 @@
     padding: 9px 0;
   }
 }
+
 @media screen and (min-width: 1024px) {
   .about-project {
     margin-bottom: 110px;
@@ -139,10 +146,8 @@
   }
 
   .about-project__progress-bar-caption {
-    font-family: "Inter", Arial, Helvetica, sans-serif;
+    font-family: design-scheme.$font-primary;
     font-weight: 500;
-    color: #8B8B8B;
+    color: design-scheme.$secondary-color;
   }
 }
-
-/*# sourceMappingURL=AboutProject.css.map */
