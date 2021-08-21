@@ -1,3 +1,5 @@
+@use '../../../styles/design-scheme';
+
 .about-me {
   display: flex;
   flex-flow: column nowrap;
@@ -77,9 +79,10 @@
 
 .about-me__photo-caption-link {
   text-decoration: none;
-  color: #FFF;
+  color: design-scheme.$primary-color;
 }
 
+// Min-Width 768px ---------------------------------------
 @media screen and (min-width: 768px) {
   .about-me {
     margin-bottom: 90px;
@@ -129,6 +132,8 @@
     margin-left: 20px;
   }
 }
+
+// Min-Width 1024px ---------------------------------------
 @media screen and (min-width: 1024px) {
   .about-me {
     margin-bottom: 125px;
@@ -160,5 +165,3 @@
     margin-top: 99px;
   }
 }
-
-/*# sourceMappingURL=AboutMe.css.map */
