@@ -17,7 +17,8 @@ const Footer = () => {
                 <a
                   className='footer__menu-link'
                   href='https://praktikum.yandex.ru'
-                  rel='nofollow noopener'
+                  target='_blank'
+                  rel='nofollow noopener noreferrer'
                 >
                   Яндекс.Практикум
                 </a>
@@ -26,7 +27,8 @@ const Footer = () => {
                 <a
                   className='footer__menu-link'
                   href='https://github.com/vladimir-mikhailov'
-                  rel='nofollow noopener'
+                  target='_blank'
+                  rel='nofollow noopener noreferrer'
                 >
                   GitHub
                 </a>
@@ -35,7 +37,8 @@ const Footer = () => {
                 <a
                   className='footer__menu-link'
                   href='https://www.facebook.com/mikhailov.vladimir/'
-                  rel='nofollow noopener'
+                  target='_blank'
+                  rel='nofollow noopener noreferrer'
                 >
                   Facebook
                 </a>

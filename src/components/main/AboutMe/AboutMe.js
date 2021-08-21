@@ -4,6 +4,7 @@ import { crop } from '@cloudinary/base/actions/resize';
 import { format, quality } from '@cloudinary/base/actions/delivery';
 import { auto } from '@cloudinary/base/qualifiers/format';
 import { autoBest } from '@cloudinary/base/qualifiers/quality';
+import Portfolio from '../Portfolio/Portfolio';
 import './AboutMe.css';
 
 const AboutMe = () => {
@@ -38,9 +39,9 @@ const AboutMe = () => {
               Фронтенд-разработчик, {new Date().getFullYear() - 1984} лет
             </p>
             <p className='about-me__photo-caption-text'>
-              Я сделал этот сайт и много других. Я&nbsp;красавчик. За&nbsp;курс в Яндекс
-              Практикуме я научился делать сайты по самым современным
-              технологиям.
+              За&nbsp;курс в Яндекс Практикуме я научился делать сайты по самым
+              современным технологиям. Я сделал этот сайт и много других.
+              Я&nbsp;красавчик.
             </p>
             <p className='about-me__photo-caption-text'>
               Раньше я умел только настраивать системы управления сайтами и
@@ -50,8 +51,8 @@ const AboutMe = () => {
             </p>
             <p className='about-me__photo-caption-text'>
               Да, и мобильные приложения тоже. Параллельно я&nbsp;изучил React
-              Native. Оказалось, что он очень похож на React. И&nbsp;теперь я могу
-              пилить всё, что захочу. И всё это будет работать на едином
+              Native. Оказалось, что он очень похож на React. И&nbsp;теперь я
+              могу пилить всё, что захочу. И всё это будет работать на едином
               бэкенде, который я теперь тоже умею поднимать.
             </p>
             <p className='about-me__photo-caption-text'>Кайф!</p>
@@ -63,6 +64,8 @@ const AboutMe = () => {
               <li className='about-me__photo-caption-links-list-item'>
                 <a
                   href='https://www.facebook.com/mikhailov.vladimir/'
+                  target='_blank'
+                  rel='nofollow noopener noreferrer'
                   className='about-me__photo-caption-link'
                 >
                   Facebook
@@ -71,6 +74,8 @@ const AboutMe = () => {
               <li className='about-me__photo-caption-links-list-item'>
                 <a
                   href='https://github.com/vladimir-mikhailov'
+                  target='_blank'
+                  rel='nofollow noopener noreferrer'
                   className='about-me__photo-caption-link'
                 >
                   Github
@@ -79,6 +84,7 @@ const AboutMe = () => {
             </ul>
           </figcaption>
         </figure>
+        <Portfolio />
       </div>
     </section>
   );
