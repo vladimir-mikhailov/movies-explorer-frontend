@@ -1,0 +1,32 @@
+.show-more-button {
+  color: #FFF;
+  background: none;
+  outline: none;
+  border-radius: 6px;
+  border: 1px solid #424242;
+  transition: opacity 0.3s;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+  margin: 50px auto 80px;
+  padding: 10px 20px;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 200px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.show-more-button:hover {
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+@media screen and (min-width: 768px) {
+  .show-more-button {
+    padding: 10px 60px;
+  }
+}
+
+/*# sourceMappingURL=ShowMoreButton.css.map */
