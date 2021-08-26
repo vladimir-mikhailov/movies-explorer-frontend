@@ -1,3 +1,4 @@
+@charset "UTF-8";
 .page {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
@@ -66,6 +67,7 @@
 
 .button {
   border-radius: 3px;
+  /* todo в отдельный класс */
   border: 0;
 }
 

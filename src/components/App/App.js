@@ -32,7 +32,7 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [isSaving, setIsSaving] = useState(false);
   const [isMenuPopupOpen, setIsMenuPopupOpen] = useState(false);
-
+  const [movies, setMovies] = useState([]);
 
   // const history = useHistory();
 
@@ -182,6 +182,8 @@ function App() {
                   <ProtectedRoute
                     path='/movies'
                     component={Movies}
+                    movies={movies}
+                    setMovies={setMovies}
                     loggedIn={loggedIn}
                   />
 
@@ -192,7 +194,7 @@ function App() {
                   />
 
                   <Route path='*'>
-                    <Main />
+                    <Main /> {/* todo show 404? */}
                   </Route>
                 </Switch>
                 <MenuPopup isOpen={isMenuPopupOpen} onClose={closeAllPopups} />
