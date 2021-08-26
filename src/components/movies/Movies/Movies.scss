@@ -1,3 +1,5 @@
+@use '../../../styles/design-scheme';
+
 .movies {
   width: 100%;
   display: flex;
@@ -29,7 +31,7 @@
 }
 
 .movies__list-item {
-  background-color: #222;
+  background-color: design-scheme.$movie-background-color;
 }
 
 @media screen and (min-width: 768px) {
@@ -38,11 +40,10 @@
     gap: 36px 30px;
   }
 }
+
 @media screen and (min-width: 1280px) {
   .movies__list {
     grid-template-columns: repeat(3, 1fr);
     gap: 30px 24px;
   }
 }
-
-/*# sourceMappingURL=Movies.css.map */
