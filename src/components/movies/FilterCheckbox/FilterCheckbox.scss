@@ -1,0 +1,82 @@
+@use '../../../styles/design-scheme';
+
+.filter-checkbox {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin: 45px auto 44px;
+
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 18px;
+}
+
+.filter-checkbox__control {
+  margin-right: 13px;
+}
+
+.filter-checkbox__control_invisible {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+.filter-checkbox__control_pseudo {
+  width: 36px;
+  height: 20px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  transition: background-color .3s, color .3s;
+}
+
+.filter-checkbox__control_pseudo:hover {
+  cursor: pointer;
+}
+
+.filter-checkbox__control_invisible + .filter-checkbox__control_pseudo {
+  background: design-scheme.$icon-background-color;
+}
+
+.filter-checkbox__control_invisible + .filter-checkbox__control_pseudo::after {
+  content: '';
+  display: flex;
+  align-self: flex-start;
+  margin: 2px;
+  background-color: design-scheme.$secondary-color;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+}
+
+.filter-checkbox__control_invisible:checked + .filter-checkbox__control_pseudo {
+  background: design-scheme.$accent-color;
+}
+
+.filter-checkbox__control_invisible:checked + .filter-checkbox__control_pseudo::after {
+  align-self: flex-end;
+  background-color: design-scheme.$primary-color;
+}
+
+
+@media screen and (min-width: 768px) {
+  .filter-checkbox {
+    font-size: 13px;
+    padding-left: 19px;
+    border-left: 1px solid design-scheme.$divider-color;
+
+    grid-area: 1 / 3 / 2 / 4;
+    margin-right: 19px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .filter-checkbox {
+    padding-left: 29px;
+  }
+}
