@@ -1,0 +1,16 @@
+.auth-form {
+  flex: 1;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@media screen and (min-width: 768px) {
+  .auth-form {
+    flex: 0;
+    justify-content: flex-start;
+  }
+}
+
+/*# sourceMappingURL=AuthForm.css.map */
