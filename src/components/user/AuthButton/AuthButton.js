@@ -7,7 +7,7 @@ const AuthButton = ({
   linkText,
   linkUrl,
   disabled,
-  className,
+  className
 }) => (
   <div className={`auth-button ${className}`}>
     <button className={`auth-button__button${disabled ? ' auth-button__button_disabled' : ''}`} type='submit' disabled={disabled}>

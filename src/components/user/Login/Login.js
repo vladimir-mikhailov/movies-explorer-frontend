@@ -5,7 +5,7 @@ import AuthButton from '../AuthButton/AuthButton';
 import Input from '../Input/Input';
 import './Login.css';
 
-const Login = ({ handleLogin }) => {
+const Login = ({ handleLogin, isSaving }) => {
   const [isFormValid, setIsFormValid] = useState(true);
   const [values, setValues] = useState({});
   const [errors, setErrors] = useState({});
@@ -58,7 +58,7 @@ const Login = ({ handleLogin }) => {
           </div>
           <AuthButton
             className='login__button'
-            buttonText='Войти'
+            buttonText={`${isSaving ? 'Входим...' : 'Войти'}`}
             spanText='Ещё не зарегистрированы?'
             linkText='Регистрация'
             linkUrl='/signup'
