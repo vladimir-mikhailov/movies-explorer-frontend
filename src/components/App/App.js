@@ -1,11 +1,5 @@
 import { useState, useEffect } from 'react';
-import {
-  Route,
-  Switch,
-  Redirect,
-  BrowserRouter,
-  // useHistory,
-} from 'react-router-dom';
+import { Route, Switch, Redirect, BrowserRouter } from 'react-router-dom';
 import './App.css';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 import LoggedInContext from '../../contexts/LoggedInContext';
@@ -24,6 +18,11 @@ import ProtectedRoute from '../common/ProtectedRoute/ProtectedRoute';
 import Register from '../user/Register/Register';
 import SavedMovies from '../movies/SavedMovies/SavedMovies';
 import MenuPopup from '../popups/MenuPopup/MenuPopup';
+import getAllMovies from '../../utils/api/moviesCatalog/getAllMovies';
+import getMovies from '../../utils/api/savedMovies/getMovies';
+import addMovie from '../../utils/api/savedMovies/addMovie';
+import deleteMovie from '../../utils/api/savedMovies/deleteMovie';
+import { beatFilmsBaseUrl } from '../../utils/api/apiConfig';
 
 // import logout from '../../utils/api/user/logout';
 
@@ -33,8 +32,13 @@ function App() {
   const [isSaving, setIsSaving] = useState(false);
   const [isMenuPopupOpen, setIsMenuPopupOpen] = useState(false);
   const [movies, setMovies] = useState([]);
-
-  // const history = useHistory();
+  const [savedMovies, setSavedMovies] = useState([]);
+  const [filteredMovies, setFilteredMovies] = useState(null);
+  const [filteredSavedMovies, setFilteredSavedMovies] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [shortsOnly, setShortsOnly] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuerySaved, setSearchQuerySaved] = useState('');
 
   const isLoggedIn = async () => {
     try {
@@ -74,6 +78,7 @@ function App() {
     }
   };
 
+  // todo убрать это
   // useEffect(() => {
   //   const email = 'vladimir@mikhailov.in';
   //   const password = 'Zaloopa123';
@@ -134,6 +139,97 @@ function App() {
     setIsMenuPopupOpen(false);
   };
 
+  const filterMovies = (unfilteredMovies, query) =>
+    unfilteredMovies.filter((m) => {
+      if (query !== '')
+        return shortsOnly
+          ? m.nameRU.includes(query) && m.duration < 60
+          : m.nameRU.includes(query);
+      return shortsOnly ? m.duration <= 40 : true;
+    });
+
+  const handleFilterSavedMovies = () => {
+    setFilteredSavedMovies(filterMovies(savedMovies, searchQuerySaved));
+  };
+
+  const handleFilterMovies = () => {
+    setFilteredMovies(filterMovies(movies, searchQuery));
+  };
+
+  const handleSearchMovies = (query) => {
+    setSearchQuery(query);
+    handleFilterMovies();
+  };
+
+  const handleSearchSavedMovies = async (query) => {
+    setIsLoading(true);
+    await setSearchQuerySaved(query);
+    await handleFilterSavedMovies();
+    setIsLoading(false);
+  };
+
+  const checkIfSavedAndGetId = (movieFromBase) => {
+    const foundMovie = savedMovies.find(
+      (savedMovie) => savedMovie.movieId === movieFromBase.id,
+    );
+    if (!foundMovie) return false;
+    return foundMovie._id;
+  };
+
+  const handleSaveAndReturnId = async (movie, savedId) => {
+    if (!savedId) {
+      try {
+        const imageUrl = `${beatFilmsBaseUrl}${movie.image.url}`;
+        const thumbnailUrl = `${beatFilmsBaseUrl}${movie.image.formats.thumbnail.url}`;
+
+        const res = await addMovie({
+          country: movie.country || 'Неизвестна',
+          description: movie.description || 'Описание отсутствует',
+          director: movie.director || 'Неизвестен',
+          duration: movie.duration,
+          image: imageUrl,
+          movieId: movie.id,
+          nameEN: movie.nameEN || 'Без Названия',
+          nameRU: movie.nameRU || 'No Name',
+          thumbnail: thumbnailUrl,
+          trailer: movie.trailerLink,
+          year: movie.year || 'Неизвестен',
+        });
+
+        setSavedMovies([...savedMovies, res]);
+
+        return res._id;
+      } catch (e) {
+        // todo error
+      }
+    }
+
+    try {
+      await deleteMovie(savedId);
+      setSavedMovies(savedMovies.filter((m) => m._id !== savedId));
+    } catch (e) {
+      // todo error
+    }
+    return false;
+  };
+
+  useEffect(() => {
+    const loadMovies = async () => {
+      try {
+        setIsLoading(true);
+        const saved = getMovies();
+        const all = getAllMovies();
+        setSavedMovies(await saved);
+        setMovies(await all);
+        setIsLoading(false);
+      } catch (e) {
+        // todo show error
+      }
+    };
+    loadMovies();
+  }, []);
+
+
   useEffect(() => {
     const handleEscClose = (e) => {
       if (e.key === 'Escape') closeAllPopups();
@@ -182,15 +278,29 @@ function App() {
                   <ProtectedRoute
                     path='/movies'
                     component={Movies}
-                    movies={movies}
-                    setMovies={setMovies}
+                    isLoading={isLoading}
                     loggedIn={loggedIn}
+                    movies={filteredMovies || movies}
+                    searchQuery={searchQuery}
+                    handleSearch={handleSearchMovies}
+                    handleSave={handleSaveAndReturnId}
+                    checkIfSavedAndGetId={checkIfSavedAndGetId}
+                    shortsOnly={shortsOnly}
+                    setShortsOnly={setShortsOnly}
                   />
 
                   <ProtectedRoute
                     path='/saved-movies'
                     component={SavedMovies}
                     loggedIn={loggedIn}
+                    isLoading={isLoading}
+                    movies={filteredSavedMovies || savedMovies}
+                    searchQuery={searchQuerySaved}
+                    handleSearch={handleSearchSavedMovies}
+                    handleSave={handleSaveAndReturnId}
+                    checkIfSavedAndGetId={checkIfSavedAndGetId}
+                    shortsOnly={shortsOnly}
+                    setShortsOnly={setShortsOnly}
                   />
 
                   <Route path='*'>
