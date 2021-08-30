@@ -18,7 +18,7 @@ const SearchForm = ({
 
   const handleChange = (e) => {
     setSearchQuery(e.target.value);
-    handleSubmit(e.target.value);
+    // handleSubmit(e.target.value);
   };
 
   const handleToggleCheckbox = (shorts) => {
