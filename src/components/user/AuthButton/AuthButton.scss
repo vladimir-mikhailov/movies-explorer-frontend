@@ -1,0 +1,73 @@
+@use '../../../styles/design-scheme';
+
+.auth-button {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+  font-size: 12px;
+  line-height: 15px;
+}
+
+.auth-button__button {
+  width: 100%;
+  border: none;
+  outline: none;
+  border-radius: 3px;
+  background-color: design-scheme.$cta-color;
+  color: design-scheme.$primary-color;
+
+  font-weight: 500;
+
+  padding: 15px;
+  transition: opacity .2s;
+}
+
+.auth-button__button:hover {
+  opacity: .8;
+  cursor: pointer;
+}
+
+.auth-button__button_disabled {
+  opacity: .6;
+  transition: none;
+}
+
+.auth-button__button_disabled:hover {
+  opacity: .6;
+  cursor: default;
+}
+
+
+.auth-button__link-container {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+
+  font-weight: 400;
+
+  margin-top: 14px;
+}
+
+.auth-button__span{
+  color: design-scheme.$secondary-color;
+}
+
+.auth-button__link{
+  color: design-scheme.$cta-color;
+  margin-left: 7px;
+}
+
+@media screen and (min-width: 768px) {
+  .auth-button {
+    margin-top: 179px;
+    font-size: 14px;
+    line-height: 17px;
+  }
+
+  .auth-button__link{
+    margin-left: 6px;
+  }
+}
