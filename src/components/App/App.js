@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
-import { Route, Switch, Redirect, BrowserRouter } from 'react-router-dom';
+import { Route, Switch, Redirect, BrowserRouter, useHistory } from 'react-router-dom';
 import './App.css';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 import LoggedInContext from '../../contexts/LoggedInContext';
 import IsSavingContext from '../../contexts/IsSavingContext';
 import isMenuPopupOpenContext from '../../contexts/isMenuPopupOpenContext';
 import setIsMenuPopupOpenContext from '../../contexts/setIsMenuPopupOpenContext';
+import { beatFilmsBaseUrl } from '../../utils/api/apiConfig';
 import getUser from '../../utils/api/user/getUser';
 import login from '../../utils/api/user/login';
 import register from '../../utils/api/user/register';
@@ -22,10 +23,8 @@ import getAllMovies from '../../utils/api/moviesCatalog/getAllMovies';
 import getMovies from '../../utils/api/savedMovies/getMovies';
 import addMovie from '../../utils/api/savedMovies/addMovie';
 import deleteMovie from '../../utils/api/savedMovies/deleteMovie';
-import { beatFilmsBaseUrl } from '../../utils/api/apiConfig';
 import NotFound from '../common/NotFound/NotFound';
-
-// import logout from '../../utils/api/user/logout';
+import logout from '../../utils/api/user/logout';
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(null);
@@ -40,6 +39,8 @@ function App() {
   const [shortsOnly, setShortsOnly] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [searchQuerySaved, setSearchQuerySaved] = useState('');
+
+  const history = useHistory();
 
   const isLoggedIn = async () => {
     try {
@@ -122,19 +123,19 @@ function App() {
     }
   };
 
-  // const handleLogout = async () => {
-  //   try {
-  //     const res = await logout();
-  //
-  //     if (res) {
-  //       setCurrentUser({});
-  //       setLoggedIn(false);
-  //       history.push('/signin');
-  //     }
-  //   } catch (e) {
-  //     // todo показать ошибку логаута
-  //   }
-  // };
+  const handleLogout = async () => {
+    try {
+      const res = await logout();
+
+      if (res) {
+        setCurrentUser({});
+        setLoggedIn(false);
+        history.push('/signin');
+      }
+    } catch (e) {
+      // todo показать ошибку логаута
+    }
+  };
 
   const closeAllPopups = () => {
     setIsMenuPopupOpen(false);
@@ -273,6 +274,7 @@ function App() {
                     path='/profile'
                     component={Profile}
                     handleUpdateUser={handleUpdateUser}
+                    handleLogout={handleLogout}
                     loggedIn={loggedIn}
                   />
 
