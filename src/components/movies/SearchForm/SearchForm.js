@@ -2,7 +2,13 @@ import { useState } from 'react';
 import './SearchForm.css';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 
-const SearchForm = ({ placeholder, handleSubmit, setShortsOnly, shortsOnly, searchQuery: query }) => {
+const SearchForm = ({
+  placeholder,
+  handleSubmit,
+  setShortsOnly,
+  shortsOnly,
+  searchQuery: query,
+}) => {
   const [searchQuery, setSearchQuery] = useState(query);
 
   const onSubmit = (e) => {
@@ -12,6 +18,11 @@ const SearchForm = ({ placeholder, handleSubmit, setShortsOnly, shortsOnly, sear
 
   const handleChange = (e) => {
     setSearchQuery(e.target.value);
+    handleSubmit(e.target.value);
+  };
+
+  const handleToggleCheckbox = (shorts) => {
+    handleSubmit(searchQuery, shorts);
   };
 
   return (
@@ -23,13 +34,15 @@ const SearchForm = ({ placeholder, handleSubmit, setShortsOnly, shortsOnly, sear
         onChange={handleChange}
         value={searchQuery}
       />
-      <button
-        className='search-form__button'
-        type='submit'
-      >
+      <button className='search-form__button' type='submit'>
         Найти
       </button>
-      <FilterCheckbox label='Короткометражки' shortsOnly={shortsOnly} setShortsOnly={setShortsOnly} />
+      <FilterCheckbox
+        label='Короткометражки'
+        shortsOnly={shortsOnly}
+        setShortsOnly={setShortsOnly}
+        onChange={handleToggleCheckbox}
+      />
     </form>
   );
 };

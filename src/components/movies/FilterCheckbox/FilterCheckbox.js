@@ -1,8 +1,9 @@
 import './FilterCheckbox.css';
 
-const FilterCheckbox = ({ label, shortsOnly, setShortsOnly }) => {
-  const handleClick = () => {
-    setShortsOnly(!shortsOnly);
+const FilterCheckbox = ({ label, shortsOnly, setShortsOnly, onChange }) => {
+  const handleClick = async () => {
+    await setShortsOnly(!shortsOnly);
+    onChange(!shortsOnly);
   };
 
   return (

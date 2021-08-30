@@ -141,26 +141,26 @@ function App() {
     setIsMenuPopupOpen(false);
   };
 
-  const filterMovies = (unfilteredMovies, query) =>
+  const filterMovies = (unfilteredMovies, query, shorts) =>
     unfilteredMovies.filter((m) => {
       if (query !== '')
-        return shortsOnly
+        return shorts
           ? m.nameRU.includes(query) && m.duration < 60
           : m.nameRU.includes(query);
-      return shortsOnly ? m.duration <= 40 : true;
+      return shorts ? m.duration <= 40 : true;
     });
 
-  const handleSearchMovies = async (query) => {
+  const handleSearchMovies = async (query, shorts) => {
     setIsLoading(true);
     await setSearchQuery(query);
-    await setFilteredMovies(filterMovies(movies, query));
+    await setFilteredMovies(filterMovies(movies, query, shorts));
     setIsLoading(false);
   };
 
-  const handleSearchSavedMovies = async (query) => {
+  const handleSearchSavedMovies = async (query, shorts) => {
     setIsLoading(true);
     await setSearchQuerySaved(query);
-    await setFilteredSavedMovies(filterMovies(savedMovies, query));
+    await setFilteredSavedMovies(filterMovies(savedMovies, query, shorts));
     setIsLoading(false);
   };
 
