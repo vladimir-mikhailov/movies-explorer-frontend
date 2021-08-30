@@ -29,6 +29,7 @@
   height: 20px;
   border-radius: 20px;
   display: flex;
+  box-sizing: border-box;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
@@ -52,6 +53,10 @@
   width: 16px;
   height: 16px;
   border-radius: 50%;
+}
+
+.filter-checkbox__control_invisible:focus + .filter-checkbox__control_pseudo {
+  border: 1px solid design-scheme.$stroke-color-dark;
 }
 
 .filter-checkbox__control_invisible:checked + .filter-checkbox__control_pseudo {
