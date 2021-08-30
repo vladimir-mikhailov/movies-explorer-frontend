@@ -150,23 +150,17 @@ function App() {
       return shortsOnly ? m.duration <= 40 : true;
     });
 
-  const handleFilterSavedMovies = () => {
-    setFilteredSavedMovies(filterMovies(savedMovies, searchQuerySaved));
-  };
-
-  const handleFilterMovies = () => {
-    setFilteredMovies(filterMovies(movies, searchQuery));
-  };
-
-  const handleSearchMovies = (query) => {
-    setSearchQuery(query);
-    handleFilterMovies();
+  const handleSearchMovies = async (query) => {
+    setIsLoading(true);
+    await setSearchQuery(query);
+    await setFilteredMovies(filterMovies(movies, query));
+    setIsLoading(false);
   };
 
   const handleSearchSavedMovies = async (query) => {
     setIsLoading(true);
     await setSearchQuerySaved(query);
-    await handleFilterSavedMovies();
+    await setFilteredSavedMovies(filterMovies(savedMovies, query));
     setIsLoading(false);
   };
 
