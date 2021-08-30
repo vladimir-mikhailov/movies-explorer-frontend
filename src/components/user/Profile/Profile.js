@@ -4,21 +4,32 @@ import './Profile.css';
 import Header from '../../common/Header/Header';
 import CurrentUserContext from '../../../contexts/CurrentUserContext';
 
-const Profile = ({ handleUpdateUser, handleLogout }) => {
+const Profile = ({ handleUpdateUser, handleLogout, isSaving }) => {
   const user = useContext(CurrentUserContext);
   const [isFormValid, setIsFormValid] = useState(true);
   const [values, setValues] = useState(user);
   const [errors, setErrors] = useState({});
   const [isEditionMode, setIsEditionMode] = useState(false);
+  const [buttonCaption, setButtonCaption] = useState('Редактировать');
 
-  const buttonCaption = isEditionMode ? 'Сохранить' : 'Редактировать';
+  useEffect(() => {
+    if (isSaving) {
+      setButtonCaption('Сохранение...');
+      return;
+    }
+    if (isEditionMode) {
+      setButtonCaption('Сохранить');
+    }
+    if (!isEditionMode) {
+      setButtonCaption('Редактировать');
+    }
+  }, [isSaving, isEditionMode]);
 
   useEffect(() => {
     setValues(user);
     setIsFormValid(true);
     setErrors({});
   }, [user]);
-
 
   const onSubmit = (e) => {
     e.preventDefault();

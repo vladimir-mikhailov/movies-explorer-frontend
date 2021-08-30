@@ -270,6 +270,7 @@ function App() {
                     handleUpdateUser={handleUpdateUser}
                     handleLogout={handleLogout}
                     loggedIn={loggedIn}
+                    isSaving={isSaving}
                   />
 
                   <ProtectedRoute
