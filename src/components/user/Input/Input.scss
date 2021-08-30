@@ -1,0 +1,52 @@
+@use '../../../styles/design-scheme';
+
+.input {
+  width: 100%;
+  display: flex;
+  background: none;
+  border: none;
+  outline: none;
+  padding-bottom: 10px;
+  border-bottom: 1px solid design-scheme.$line-color;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  color: design-scheme.$primary-color;
+  margin-top: 5px;
+}
+
+.input_type_error {
+  color: design-scheme.$error-color;
+}
+
+.input:focus {
+  font-weight: 500;
+  border-bottom-color: design-scheme.$cta-color;
+}
+
+.input__label {
+  display: block;
+  margin-top: 12px;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 12px;
+  color: design-scheme.$secondary-color;
+}
+
+.input__label:first-of-type {
+  margin-top: 0;
+}
+
+.input__error {
+  display: block;
+  min-height: 12px;
+  visibility: hidden;
+  color: design-scheme.$error-color;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 12px;
+}
+
+.input__error_visible {
+  visibility: visible;
+}
