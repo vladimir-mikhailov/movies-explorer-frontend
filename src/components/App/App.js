@@ -23,6 +23,7 @@ import getMovies from '../../utils/api/savedMovies/getMovies';
 import addMovie from '../../utils/api/savedMovies/addMovie';
 import deleteMovie from '../../utils/api/savedMovies/deleteMovie';
 import { beatFilmsBaseUrl } from '../../utils/api/apiConfig';
+import NotFound from '../common/NotFound/NotFound';
 
 // import logout from '../../utils/api/user/logout';
 
@@ -229,7 +230,6 @@ function App() {
     loadMovies();
   }, []);
 
-
   useEffect(() => {
     const handleEscClose = (e) => {
       if (e.key === 'Escape') closeAllPopups();
@@ -250,7 +250,7 @@ function App() {
                     <Main />
                   </Route>
 
-                  <Route path='/signup'>
+                  <Route exact path='/signup'>
                     {loggedIn && <Redirect to='/movies' />}
                     <Register
                       handleRegister={handleRegister}
@@ -259,7 +259,7 @@ function App() {
                     />
                   </Route>
 
-                  <Route path='/signin'>
+                  <Route exact path='/signin'>
                     {loggedIn && <Redirect to='/movies' />}
                     <Login
                       handleLogin={handleLogin}
@@ -269,6 +269,7 @@ function App() {
                   </Route>
 
                   <ProtectedRoute
+                    exact
                     path='/profile'
                     component={Profile}
                     handleUpdateUser={handleUpdateUser}
@@ -276,6 +277,7 @@ function App() {
                   />
 
                   <ProtectedRoute
+                    exact
                     path='/movies'
                     component={Movies}
                     isLoading={isLoading}
@@ -290,6 +292,7 @@ function App() {
                   />
 
                   <ProtectedRoute
+                    exact
                     path='/saved-movies'
                     component={SavedMovies}
                     loggedIn={loggedIn}
@@ -304,7 +307,7 @@ function App() {
                   />
 
                   <Route path='*'>
-                    <Main /> {/* todo show 404? */}
+                    <NotFound />
                   </Route>
                 </Switch>
                 <MenuPopup isOpen={isMenuPopupOpen} onClose={closeAllPopups} />

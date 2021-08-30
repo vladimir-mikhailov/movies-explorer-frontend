@@ -21,6 +21,10 @@ const Account = ({ withBurger, visibility }) => {
     }
   };
 
+  const handleClick = () => {
+    setIsMenuPopupOpen(false);
+  };
+
   return (
     <nav className={accountClassName}>
       {isLoggedIn && (
@@ -28,6 +32,7 @@ const Account = ({ withBurger, visibility }) => {
           <Link
             className={`link account__link account__link_visible-on_${visibility}`}
             to='/profile'
+            onClick={handleClick}
           >
             Аккаунт
           </Link>
@@ -46,12 +51,13 @@ const Account = ({ withBurger, visibility }) => {
 
       {isLoggedIn === false && (
         <>
-          <Link className='link account__auth-link' to='/signup'>
+          <Link className='link account__auth-link' to='/signup' onClick={handleClick}>
             Регистрация
           </Link>
           <Link
             className='link account__auth-link account__auth-link_black button button_color_accent account__button'
             to='/signin'
+            onClick={handleClick}
           >
             Войти
           </Link>
