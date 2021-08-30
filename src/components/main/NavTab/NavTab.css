@@ -28,6 +28,7 @@
 
 .navtab__menu-link {
   color: #FFF;
+  text-decoration: underline;
   text-underline-position: under;
 }
 
