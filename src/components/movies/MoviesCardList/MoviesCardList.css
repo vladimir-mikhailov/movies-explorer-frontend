@@ -1,0 +1,27 @@
+.movies-card-list {
+  list-style: none;
+  margin: 40px 0 30px;
+  padding: 0;
+  display: grid;
+  grid-template-rows: auto;
+  gap: 16px;
+}
+
+.movies-card-list__list-item {
+  background-color: #222;
+}
+
+@media screen and (min-width: 768px) {
+  .movies-card-list {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 36px 30px;
+  }
+}
+@media screen and (min-width: 1280px) {
+  .movies-card-list {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px 24px;
+  }
+}
+
+/*# sourceMappingURL=MoviesCardList.css.map */
