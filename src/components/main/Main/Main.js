@@ -13,7 +13,7 @@ const Main = () => (
       <main className='main'>
         <AboutProject />
         <Techs />
-        <AboutMe /> {/* Внутри - Portfolio */}
+        <AboutMe />
       </main>
       <Footer />
     </>
