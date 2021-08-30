@@ -1,3 +1,5 @@
+@use '../../../styles/design-scheme';
+
 .saved-movies {
   flex: 1;
   display: flex;
@@ -17,5 +19,3 @@
   justify-content: flex-start;
   align-items: center;
 }
-
-/*# sourceMappingURL=SavedMovies.css.map */
