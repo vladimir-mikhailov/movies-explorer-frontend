@@ -1,0 +1,42 @@
+.auth-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 56px auto 80px;
+}
+
+.auth-header__heading {
+  display: flex;
+  flex-direction: column;
+  justify-items: flex-start;
+  align-items: center;
+  margin: 0;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 29px;
+}
+
+.auth-header__heading:before {
+  display: flex;
+  content: "";
+  background: url("../../../images/logo-min.svg") no-repeat center center;
+  height: 38px;
+  width: 38px;
+  margin-bottom: 50px;
+}
+
+@media screen and (min-width: 768px) {
+  .auth-header {
+    flex: 1;
+    justify-content: flex-end;
+    align-self: flex-start;
+    margin: 0;
+  }
+
+  .auth-header__heading {
+    align-items: flex-start;
+  }
+}
+
+/*# sourceMappingURL=AuthHeader.css.map */
