@@ -1,15 +1,6 @@
 @use '../../../styles/design-scheme';
 
 .movies {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-}
-
-.movies__container {
-  width: 100%;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -17,33 +8,14 @@
   align-items: center;
 }
 
-.movies__container_preloader {
+.movies_preloader {
   justify-content: center;
+  text-align: center;
 }
 
-.movies__list {
-  list-style: none;
-  margin: 40px 0 30px;
-  padding: 0;
-  display: grid;
-  grid-template-rows: auto;
-  gap: 16px;
-}
-
-.movies__list-item {
-  background-color: design-scheme.$movie-background-color;
-}
-
-@media screen and (min-width: 768px) {
-  .movies__list {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 36px 30px;
-  }
-}
-
-@media screen and (min-width: 1280px) {
-  .movies__list {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 30px 24px;
-  }
+.movies__container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
 }
