@@ -1,10 +1,10 @@
 @use '../../../styles/design-scheme';
 
-.movie {
+.movies-card {
   margin: 0;
 }
 
-.movie__caption-container {
+.movies-card__caption-container {
   padding: 14px;
   display: flex;
   flex-direction: row;
@@ -12,13 +12,13 @@
   align-items: center;
 }
 
-.movie__heading-container {
+.movies-card__heading-container {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
 }
 
-.movie__heading {
+.movies-card__heading {
   margin: 0;
   font-weight: 500;
   font-size: 15px;
@@ -29,7 +29,7 @@
   overflow: hidden;
 }
 
-.movie__duration {
+.movies-card__duration {
   margin: 9px 0 0;
   color: design-scheme.$secondary-color;
   font-weight: 400;
@@ -37,7 +37,7 @@
   line-height: 13px;
 }
 
-.movie__save-icon {
+.movies-card__save-icon {
   width: 30px;
   height: 30px;
   background: design-scheme.$icon-background-color url('../../../images/icon-save-not-saved-min.svg') no-repeat center center;
@@ -46,19 +46,20 @@
   transition: opacity .3s;
 }
 
-.movie__save-icon:hover {
+.movies-card__save-icon:hover {
   cursor: pointer;
   opacity: .7;
 }
 
-.movie__save-icon_type_saved {
+.movies-card__save-icon_type_saved {
   background: design-scheme.$accent-color url('../../../images/icon-saved-min.svg') no-repeat center center;
 }
 
-.movie__save-icon_type_delete {
+.movies-card__save-icon_type_delete {
+  background: design-scheme.$icon-background-color url('../../../images/button-delete-min.svg') no-repeat center center;
 }
 
-.movie__image {
+.movies-card__image {
   width: 300px;
   height: 168px;
   object-fit: cover;
@@ -66,22 +67,22 @@
 }
 
 @media screen and (min-width: 768px) {
-  .movie__heading {
+  .movies-card__heading {
     max-width: 250px;
   }
 
-  .movie__image {
+  .movies-card__image {
     width: 339px;
     height: 190px;
   }
 }
 
 @media screen and (min-width: 1280px) {
-  .movie__heading {
+  .movies-card__heading {
     max-width: 280px;
   }
 
-  .movie__image {
+  .movies-card__image {
     width: 364px;
     height: 203px;
   }
