@@ -60,7 +60,6 @@ const Profile = ({ handleUpdateUser, handleLogout, isSaving }) => {
         <form className='profile form' onSubmit={onSubmit}>
           <div className='profile__container'>
             <h1 className='profile__heading'>{`Привет, ${user.name}!`}</h1>
-
             <label htmlFor='name' className='profile__input-label'>
               Имя
               <input
