@@ -1,0 +1,62 @@
+.message-popup {
+  position: fixed;
+  top: calc(50% - 140px);
+  left: calc(50% - 140px);
+  width: 280px;
+  height: 280px;
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+  visibility: hidden;
+  display: flex;
+  flex-flow: row;
+  justify-content: center;
+  border-radius: 20px;
+}
+
+.message-popup_open {
+  visibility: visible;
+  opacity: 1;
+}
+
+.message-popup__container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  background: #313131;
+  border-radius: 20px;
+}
+
+.message-popup__text {
+  margin: 60px 20px;
+  text-align: center;
+}
+
+.message-popup__button-close {
+  margin: 20px 20px 0 0;
+  border: none;
+  outline: none;
+  background: url(../../../images/button-close-min.svg);
+  width: 32px;
+  height: 32px;
+  background-size: contain;
+  cursor: pointer;
+  display: flex;
+  align-self: flex-end;
+  transition: opacity 0.3s linear;
+}
+
+.message-popup__button-close:hover {
+  opacity: 0.8;
+}
+
+@media screen and (min-width: 425px) {
+  .message-popup__button-close {
+    margin: 29px 29px 0 0;
+  }
+}
+
+/*# sourceMappingURL=MessagePopup.css.map */
