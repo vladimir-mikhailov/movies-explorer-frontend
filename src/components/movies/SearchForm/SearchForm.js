@@ -5,9 +5,8 @@ import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 const SearchForm = ({
   placeholder,
   handleSubmit,
-  setShortsOnly,
-  shortsOnly,
   searchQuery: query,
+  shorts,
 }) => {
   const [searchQuery, setSearchQuery] = useState(query);
 
@@ -21,8 +20,8 @@ const SearchForm = ({
     // handleSubmit(e.target.value);
   };
 
-  const handleToggleCheckbox = (shorts) => {
-    handleSubmit(searchQuery, shorts);
+  const handleToggleCheckbox = (shortsOnly) => {
+    handleSubmit(searchQuery, shortsOnly);
   };
 
   return (
@@ -39,9 +38,8 @@ const SearchForm = ({
       </button>
       <FilterCheckbox
         label='Короткометражки'
-        shortsOnly={shortsOnly}
-        setShortsOnly={setShortsOnly}
         onChange={handleToggleCheckbox}
+        shorts={shorts}
       />
     </form>
   );

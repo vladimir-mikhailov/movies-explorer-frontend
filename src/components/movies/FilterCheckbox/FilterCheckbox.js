@@ -1,6 +1,10 @@
+import { useState } from 'react';
 import './FilterCheckbox.css';
 
-const FilterCheckbox = ({ label, shortsOnly, setShortsOnly, onChange }) => {
+const FilterCheckbox = ({ label, onChange, shorts }) => {
+  const [shortsOnly, setShortsOnly] = useState(shorts);
+
+
   const handleClick = async () => {
     await setShortsOnly(!shortsOnly);
     onChange(!shortsOnly);

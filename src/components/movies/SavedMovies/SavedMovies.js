@@ -11,9 +11,8 @@ const SavedMovies = ({
   handleSearch,
   handleSave,
   checkIfSavedAndGetId,
-  setShortsOnly,
-  shortsOnly,
   searchQuery,
+  shorts,
 }) => (
   <>
     <Header inHero={false} />
@@ -23,9 +22,8 @@ const SavedMovies = ({
           <SearchForm
             placeholder='Фильм'
             handleSubmit={handleSearch}
-            setShortsOnly={setShortsOnly}
-            shortsOnly={shortsOnly}
             searchQuery={searchQuery}
+            shorts={shorts}
           />
         </div>
       </section>

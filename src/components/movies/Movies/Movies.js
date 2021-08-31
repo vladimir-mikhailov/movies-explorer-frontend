@@ -11,45 +11,43 @@ const Movies = ({
   handleSearch,
   handleSave,
   checkIfSavedAndGetId,
-  setShortsOnly,
-  shortsOnly,
-  searchQuery
+  searchQuery,
+  shorts
 }) => (
-  <>
-    <Header inHero={false} />
-    <main className='main'>
-      <section className='section'>
-        <div className='section__container section__container_wide'>
-          <SearchForm
-            placeholder='Фильм'
-            handleSubmit={handleSearch}
-            setShortsOnly={setShortsOnly}
-            shortsOnly={shortsOnly}
-            searchQuery={searchQuery}
-          />
-        </div>
-      </section>
-
-      {(isLoading || (movies.length === 0)) ? (
-        <section className='section movies movies_preloader'>
+    <>
+      <Header inHero={false} />
+      <main className='main'>
+        <section className='section'>
           <div className='section__container section__container_wide'>
-            {isLoading ? (<Preloader />) : 'Ничего не найдено'}
-          </div>
-        </section>
-      ) : (
-        <section className='section movies'>
-          <div className='section__container section__container_wide movies__container'>
-            <MoviesCardList
-              movies={movies}
-              handleSave={handleSave}
-              checkIfSavedAndGetId={checkIfSavedAndGetId}
+            <SearchForm
+              placeholder='Фильм'
+              handleSubmit={handleSearch}
+              searchQuery={searchQuery}
+              shorts={shorts}
             />
           </div>
         </section>
-      )}
-    </main>
-    <Footer />
-  </>
-);
+
+        {isLoading || movies.length === 0 ? (
+          <section className='section movies movies_preloader'>
+            <div className='section__container section__container_wide'>
+              {isLoading ? <Preloader /> : 'Ничего не найдено'}
+            </div>
+          </section>
+        ) : (
+          <section className='section movies'>
+            <div className='section__container section__container_wide movies__container'>
+              <MoviesCardList
+                movies={movies}
+                handleSave={handleSave}
+                checkIfSavedAndGetId={checkIfSavedAndGetId}
+              />
+            </div>
+          </section>
+        )}
+      </main>
+      <Footer />
+    </>
+  );
 
 export default Movies;

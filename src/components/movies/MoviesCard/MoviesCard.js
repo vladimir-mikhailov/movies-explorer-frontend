@@ -9,22 +9,18 @@ const MoviesCard = ({ movie, handleSave, typeSaved, checkIfSavedAndGetId }) => {
     setSavedId(movie._id || checkIfSavedAndGetId(movie));
   }, [checkIfSavedAndGetId, movie]);
 
-  const onSaveClick = async () => {
-    try {
-      if (typeSaved) {
-        await handleSave(movie, savedId);
-        return;
-      }
-      if (savedId) {
-        await handleSave(movie, savedId);
-        setSavedId(false);
-        return;
-      }
-      if (!savedId) {
-        setSavedId(await handleSave(movie, savedId));
-      }
-    } catch (e) {
-      // todo show error
+  const onSaveClick = () => {
+    if (typeSaved) {
+      handleSave(movie, savedId);
+      return;
+    }
+    if (savedId) {
+      handleSave(movie, savedId);
+      setSavedId(false);
+      return;
+    }
+    if (!savedId) {
+      setSavedId(handleSave(movie, savedId));
     }
   };
 
@@ -44,15 +40,16 @@ const MoviesCard = ({ movie, handleSave, typeSaved, checkIfSavedAndGetId }) => {
     <figure className='movies-card'>
       <figcaption className='movies-card__caption-container'>
         <div className='movies-card__heading-container'>
-
-            <h2 className='movies-card__heading' title={movie.nameRU}>
-              <a
-                href={movie.trailer || movie.trailerLink}
-                target='_blank'
-                rel='nofollow noopener noreferrer'
-                className='link'
-              >{movie.nameRU}</a>
-            </h2>
+          <h2 className='movies-card__heading' title={movie.nameRU}>
+            <a
+              href={movie.trailer || movie.trailerLink}
+              target='_blank'
+              rel='nofollow noopener noreferrer'
+              className='link'
+            >
+              {movie.nameRU}
+            </a>
+          </h2>
 
           <p className='movies-card__duration'>
             {timeFormatted(movie.duration)}

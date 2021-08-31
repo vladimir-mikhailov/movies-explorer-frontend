@@ -38,7 +38,8 @@ function App() {
   const [filteredMovies, setFilteredMovies] = useState(null);
   const [filteredSavedMovies, setFilteredSavedMovies] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [shortsOnly, setShortsOnly] = useState(false);
+  const [shortsMovies, setShortsMovies] = useState(false);
+  const [shortsSaved, setShortsSaved] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [searchQuerySaved, setSearchQuerySaved] = useState('');
   const [message, setMessage] = useState('');
@@ -65,14 +66,9 @@ function App() {
   const handleLogin = async ({ email, password }) => {
     try {
       setIsSaving(true);
-
-      const user = await login({ email, password });
-
-      if (user) {
-        setIsSaving(false);
-        setCurrentUser(user);
-        setLoggedIn(true);
-      }
+      await login({ email, password });
+      await isLoggedIn();
+      setIsSaving(false);
     } catch (e) {
       setIsSaving(false);
       setCurrentUser({});
@@ -151,17 +147,19 @@ function App() {
       return shorts ? m.duration <= 40 : true;
     });
 
-  const handleSearchMovies = async (query, shorts) => {
+  const handleSearchMovies = (query, shorts) => {
     setIsLoading(true);
-    await setSearchQuery(query);
-    await setFilteredMovies(filterMovies(movies, query, shorts));
+    setSearchQuery(query);
+    setShortsMovies(shorts);
+    setFilteredMovies(filterMovies(movies, query, shorts));
     setIsLoading(false);
   };
 
-  const handleSearchSavedMovies = async (query, shorts) => {
+  const handleSearchSavedMovies = (query, shorts) => {
     setIsLoading(true);
-    await setSearchQuerySaved(query);
-    await setFilteredSavedMovies(filterMovies(savedMovies, query, shorts));
+    setSearchQuerySaved(query);
+    setShortsSaved(shorts);
+    setFilteredSavedMovies(filterMovies(savedMovies, query, shorts));
     setIsLoading(false);
   };
 
@@ -288,8 +286,7 @@ function App() {
                     handleSearch={handleSearchMovies}
                     handleSave={handleSaveAndReturnId}
                     checkIfSavedAndGetId={checkIfSavedAndGetId}
-                    shortsOnly={shortsOnly}
-                    setShortsOnly={setShortsOnly}
+                    shorts={shortsMovies}
                   />
 
                   <ProtectedRoute
@@ -303,8 +300,7 @@ function App() {
                     handleSearch={handleSearchSavedMovies}
                     handleSave={handleSaveAndReturnId}
                     checkIfSavedAndGetId={checkIfSavedAndGetId}
-                    shortsOnly={shortsOnly}
-                    setShortsOnly={setShortsOnly}
+                    shorts={shortsSaved}
                   />
 
                   <Route path='*'>
@@ -312,7 +308,11 @@ function App() {
                   </Route>
                 </Switch>
                 <MenuPopup isOpen={isMenuPopupOpen} onClose={closeAllPopups} />
-                <MessagePopup isOpen={isMessagePopupOpen} message={message} onClose={closeAllPopups} />
+                <MessagePopup
+                  isOpen={isMessagePopupOpen}
+                  message={message}
+                  onClose={closeAllPopups}
+                />
               </isMenuPopupOpenContext.Provider>
             </setIsMenuPopupOpenContext.Provider>
           </IsSavingContext.Provider>
