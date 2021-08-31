@@ -6,6 +6,7 @@
   width: 100%;
   font-size: 12px;
   line-height: 15px;
+  margin-bottom: 30px;
 }
 
 .auth-button__button {
@@ -58,6 +59,7 @@
     margin-top: 179px;
     font-size: 14px;
     line-height: 17px;
+    margin-bottom: 0;
   }
 
   .auth-button__link {

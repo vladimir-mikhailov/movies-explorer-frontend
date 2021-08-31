@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Route, Switch, Redirect, BrowserRouter, useHistory } from 'react-router-dom';
+import { Route, Switch, Redirect, BrowserRouter } from 'react-router-dom';
 import './App.css';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 import LoggedInContext from '../../contexts/LoggedInContext';
@@ -25,12 +25,14 @@ import addMovie from '../../utils/api/savedMovies/addMovie';
 import deleteMovie from '../../utils/api/savedMovies/deleteMovie';
 import NotFound from '../common/NotFound/NotFound';
 import logout from '../../utils/api/user/logout';
+import MessagePopup from '../popups/MessagePopup/MessagePopup';
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(null);
   const [currentUser, setCurrentUser] = useState({});
   const [isSaving, setIsSaving] = useState(false);
   const [isMenuPopupOpen, setIsMenuPopupOpen] = useState(false);
+  const [isMessagePopupOpen, setIsMessagePopupOpen] = useState(false);
   const [movies, setMovies] = useState([]);
   const [savedMovies, setSavedMovies] = useState([]);
   const [filteredMovies, setFilteredMovies] = useState(null);
@@ -39,8 +41,7 @@ function App() {
   const [shortsOnly, setShortsOnly] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [searchQuerySaved, setSearchQuerySaved] = useState('');
-
-  const history = useHistory();
+  const [message, setMessage] = useState('');
 
   const isLoggedIn = async () => {
     try {
@@ -76,16 +77,10 @@ function App() {
       setIsSaving(false);
       setCurrentUser({});
       setLoggedIn(false);
-      // todo показать ошибку логина
+      setMessage(e.message);
+      setIsMessagePopupOpen(true);
     }
   };
-
-  // todo убрать это
-  // useEffect(() => {
-  //   const email = 'vladimir@mikhailov.in';
-  //   const password = 'Zaloopa123';
-  //   handleLogin({ email, password });
-  // }, []);
 
   const handleRegister = async ({ email, name, password }) => {
     try {
@@ -96,13 +91,15 @@ function App() {
       if (newUser) {
         setIsSaving(false);
 
-        // todo показать сообщение об успешной регистрации
+        setMessage('Успешная регистрация');
+        setIsMessagePopupOpen(true);
 
         await handleLogin({ name, password });
       }
     } catch (e) {
       setIsSaving(false);
-      // todo показать сообщение об ошибке при регистрации
+      setMessage(e.message);
+      setIsMessagePopupOpen(true);
     }
   };
 
@@ -115,11 +112,13 @@ function App() {
       if (updatedUser) {
         setIsSaving(false);
         setCurrentUser(updatedUser);
-        // todo показать сообщение об успешном изменении пользователя
+        setMessage('Данные успешно обновлены');
+        setIsMessagePopupOpen(true);
       }
     } catch (e) {
       setIsSaving(false);
-      // todo показать ошибку изменения данных пользователя
+      setMessage(e.message);
+      setIsMessagePopupOpen(true);
     }
   };
 
@@ -130,15 +129,17 @@ function App() {
       if (res) {
         setCurrentUser({});
         setLoggedIn(false);
-        history.push('/signin');
       }
     } catch (e) {
-      // todo показать ошибку логаута
+      setMessage(e.message);
+      setIsMessagePopupOpen(true);
     }
   };
 
   const closeAllPopups = () => {
     setIsMenuPopupOpen(false);
+    setIsMessagePopupOpen(false);
+    setMessage('');
   };
 
   const filterMovies = (unfilteredMovies, query, shorts) =>
@@ -196,7 +197,8 @@ function App() {
 
         return res._id;
       } catch (e) {
-        // todo error
+        setMessage(e.message);
+        setIsMessagePopupOpen(true);
       }
     }
 
@@ -204,7 +206,8 @@ function App() {
       await deleteMovie(savedId);
       setSavedMovies(savedMovies.filter((m) => m._id !== savedId));
     } catch (e) {
-      // todo error
+      setMessage(e.message);
+      setIsMessagePopupOpen(true);
     }
     return false;
   };
@@ -219,11 +222,12 @@ function App() {
         setMovies(await all);
         setIsLoading(false);
       } catch (e) {
-        // todo show error
+        setMessage(e.message);
+        setIsMessagePopupOpen(true);
       }
     };
-    loadMovies();
-  }, []);
+    if (loggedIn) loadMovies();
+  }, [loggedIn]);
 
   useEffect(() => {
     const handleEscClose = (e) => {
@@ -308,6 +312,7 @@ function App() {
                   </Route>
                 </Switch>
                 <MenuPopup isOpen={isMenuPopupOpen} onClose={closeAllPopups} />
+                <MessagePopup isOpen={isMessagePopupOpen} message={message} onClose={closeAllPopups} />
               </isMenuPopupOpenContext.Provider>
             </setIsMenuPopupOpenContext.Provider>
           </IsSavingContext.Provider>
