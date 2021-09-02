@@ -1,0 +1,44 @@
+@use '../../../styles/design-scheme';
+
+.navtab {
+  background-color: design-scheme.$background-color-gray;
+  display: flex;
+  justify-content: center;
+}
+
+.navtab__menu-list {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  padding: 0;
+  margin: 25px auto;
+}
+
+.navtab__menu-list-item {
+  padding: 0;
+  margin-left: 24px;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 16px;
+}
+
+.navtab__menu-list-item:first-child {
+  margin-left: 0;
+}
+
+.navtab__menu-link {
+  color: design-scheme.$primary-color;
+  text-decoration: underline;
+  text-underline-position: under;
+}
+
+@media screen and (min-width: 425px) {
+
+  .navtab__menu-list-item {
+    margin-left: 40px;
+    font-size: 13px;
+  }
+}
+

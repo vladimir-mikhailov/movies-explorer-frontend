@@ -1,0 +1,21 @@
+.saved-movies {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.saved-movies_preloader {
+  justify-content: center;
+  text-align: center;
+}
+
+.saved-movies__container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+/*# sourceMappingURL=SavedMovies.css.map */

@@ -1,0 +1,21 @@
+.header {
+  margin: 18px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header__logo {
+  height: 38px;
+  width: 38px;
+}
+
+.header__nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-left: 44px;
+}
+
+/*# sourceMappingURL=Header.css.map */

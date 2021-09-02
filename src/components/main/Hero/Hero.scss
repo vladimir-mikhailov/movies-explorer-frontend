@@ -1,0 +1,8 @@
+@use '../../../styles/design-scheme';
+
+.hero {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  background-color: design-scheme.$hero-background-color;
+}

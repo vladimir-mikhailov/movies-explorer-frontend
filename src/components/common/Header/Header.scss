@@ -1,0 +1,21 @@
+@use '../../../styles/design-scheme';
+
+.header {
+  margin: 18px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header__logo {
+  height: design-scheme.$logo-size;
+  width: design-scheme.$logo-size;
+}
+
+.header__nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-left: 44px;
+}

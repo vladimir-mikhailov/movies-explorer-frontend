@@ -1,0 +1,95 @@
+@use '../../../styles/design-scheme';
+
+$preloader-size: design-scheme.$logo-size;
+$preloader-border-radius: $preloader-size / 2;
+
+@keyframes preloader-inside-white {
+  0% {
+    -webkit-transform: scale(0, 0);
+    -moz-transform: scale(0, 0);
+    -ms-transform: scale(0, 0);
+    -o-transform: scale(0, 0);
+    transform: scale(0, 0);
+  }
+  100% {
+    -webkit-transform: scale(1, 1);
+    -moz-transform: scale(1, 1);
+    -ms-transform: scale(1, 1);
+    -o-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
+}
+
+@keyframes preloader-inside-colored {
+  0% {
+    -webkit-transform: scale(0, 0);
+    -moz-transform: scale(0, 0);
+    -ms-transform: scale(0, 0);
+    -o-transform: scale(0, 0);
+    transform: scale(0, 0);
+  }
+  30% {
+    -webkit-transform: scale(0, 0);
+    -moz-transform: scale(0, 0);
+    -ms-transform: scale(0, 0);
+    -o-transform: scale(0, 0);
+    transform: scale(0, 0);
+  }
+  100% {
+    -webkit-transform: scale(1, 1);
+    -moz-transform: scale(1, 1);
+    -ms-transform: scale(1, 1);
+    -o-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
+}
+
+.preloader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  //padding: 20px;
+  box-sizing: border-box;
+}
+
+.preloader__container {
+  width: $preloader-size;
+  height: $preloader-size;
+  position: relative;
+}
+
+.preloader__round {
+  width: $preloader-size;
+  height: $preloader-size;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: design-scheme.$accent-color;
+  border-radius: $preloader-border-radius;
+}
+
+.preloader__round::after,
+.preloader__round::before {
+  content: '';
+  width: $preloader-size;
+  height: $preloader-size;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: $preloader-border-radius;
+}
+
+.preloader__round::after {
+  background: design-scheme.$primary-color;
+  animation: preloader-inside-white 1s ease-in-out infinite;
+}
+
+.preloader__round::before {
+  z-index: 10;
+  background: design-scheme.$accent-color;
+  animation: preloader-inside-colored 1s ease-in-out infinite;
+}

@@ -1,0 +1,103 @@
+@use '../../../styles/design-scheme';
+
+.account {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex: 1;
+}
+
+.account_burger {
+  flex: 0;
+}
+
+.account__link {
+  text-decoration: none;
+  color: design-scheme.$primary-color;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 16px;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.account__link::after {
+  content: '';
+  display: flex;
+  height: 30px;
+  width: 30px;
+  margin-left: 13px;
+  border-radius: 6px;
+  background-color: design-scheme.$icon-background-color;
+  background-image: url('../../../images/account-icon-min.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.account__auth-link {
+  text-decoration: none;
+  color: design-scheme.$primary-color;
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 16px;
+  margin-right: 14px;
+}
+
+.account__auth-link:last-child {
+  margin-right: 0;
+}
+
+.account__auth-link_black {
+  color: design-scheme.$black-color;
+}
+
+.account__button {
+  padding: 5px 12px;
+}
+
+.burger {
+  display: none;
+}
+
+.burger_open {
+  display: none;
+}
+
+@media screen and (max-width: 425px) {
+  .burger {
+    height: 43px;
+    width: 40px;
+  }
+}
+
+@media screen and (min-width: 425px) {
+  .account__auth-link {
+    font-size: 12px;
+    margin-right: 30px;
+  }
+
+  .account__button {
+    padding: 8px 20px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .account__link_visible-on_desktop {
+    display: none;
+  }
+
+  .burger {
+    display: flex;
+    height: 44px;
+    width: 44px;
+    background: url('../../../images/burger-icon-min.svg') no-repeat center;
+  }
+
+  .burger_open {
+    display: none;
+  }
+}
+
+

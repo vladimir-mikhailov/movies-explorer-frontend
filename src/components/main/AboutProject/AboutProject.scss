@@ -1,0 +1,153 @@
+@use '../../../styles/design-scheme';
+
+.about-project {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  margin-bottom: 70px;
+}
+
+.about-project__container {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.about-project__list {
+  list-style: none;
+  padding: 0;
+  margin: 60px auto;
+  display: grid;
+  grid-template-columns:  minmax(284px, 1fr);
+  gap: 56px;
+  width: 100%;
+  justify-content: center;
+}
+
+.about-project__list-item {
+  width: 100%;
+  //max-width: 319px;
+  margin: 0;
+}
+
+.about-project__list-item-heading {
+  font-size: 18px;
+  line-height: 22px;
+  letter-spacing: -0.04em;
+  font-weight: 400;
+  margin: 0;
+}
+
+.about-project__list-item-text {
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 16px;
+  margin: 16px 0 0;
+}
+
+.about-project__progress-bar {
+  width: 100%;
+  //max-width: 319px;
+  display: grid;
+  grid-template-columns: minmax(100px, max-content) 1fr;
+  gap: 10px 0;
+  justify-content: center;
+  text-align: center;
+
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 13px;
+}
+
+.about-project__progress-bar-part {
+  padding: 11px 0;
+}
+
+.about-project__progress-bar-part_type_filled {
+  background-color: design-scheme.$accent-color;
+  color: design-scheme.$black-color;
+}
+
+.about-project__progress-bar-part_type_empty {
+  background-color: design-scheme.$tabs-background-color;
+}
+
+.about-project__progress-bar-caption {
+  font-family: design-scheme.$font-secondary;
+  color: design-scheme.$caption-color;
+  line-height: 14px;
+}
+
+@media screen and (min-width: 520px) {
+  .about-project__list {
+    grid-template-columns:  repeat(2, 1fr);
+    gap: 30px;
+  }
+
+  .about-project__progress-bar {
+    grid-template-columns: 140px 1fr;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .about-project {
+    margin-bottom: 90px;
+  }
+
+  .about-project__list {
+    margin: 70px auto;
+  }
+
+  .about-project__list-item {
+    max-width: 550px;
+  }
+
+  .about-project__list-item-heading {
+    font-size: 20px;
+    line-height: 24px;
+  }
+
+  .about-project__list-item-text {
+    font-size: 12px;
+    line-height: 18px;
+    margin-top: 22px;
+  }
+
+  .about-project__progress-bar {
+    max-width: 100%;
+    row-gap: 14px;
+    font-size: 14px;
+    line-height: 17px;
+  }
+
+  .about-project__progress-bar-part {
+    padding: 9px 0;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .about-project {
+    margin-bottom: 110px;
+  }
+
+  .about-project__list {
+    gap: 40px;
+  }
+
+  .about-project__list-item-text {
+    font-size: 14px;
+    line-height: 20px;
+    margin-top: 26px;
+  }
+
+  .about-project__progress-bar {
+    grid-template-columns: 228px 1fr;
+  }
+
+  .about-project__progress-bar-caption {
+    font-family: design-scheme.$font-primary;
+    font-weight: 500;
+    color: design-scheme.$secondary-color;
+  }
+}
