@@ -23,7 +23,7 @@ import getAllMovies from '../../utils/api/moviesCatalog/getAllMovies';
 import getMovies from '../../utils/api/savedMovies/getMovies';
 import addMovie from '../../utils/api/savedMovies/addMovie';
 import deleteMovie from '../../utils/api/savedMovies/deleteMovie';
-import NotFound from '../common/NotFound/NotFound';
+import NotFound from '../errors/NotFound/NotFound';
 import logout from '../../utils/api/user/logout';
 import MessagePopup from '../popups/MessagePopup/MessagePopup';
 
