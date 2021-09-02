@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Route, Switch, Redirect, BrowserRouter } from 'react-router-dom';
 import './App.css';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
@@ -138,6 +138,20 @@ function App() {
     setMessage('');
   };
 
+  const loadMovies = useCallback(async () => {
+    try {
+      setIsLoading(true);
+      const saved = getMovies();
+      const all = getAllMovies();
+      setSavedMovies(await saved);
+      setMovies(await all);
+      setIsLoading(false);
+    } catch (e) {
+      setMessage(e.message);
+      setIsMessagePopupOpen(true);
+    }
+  },[]);
+
   const filterMovies = (unfilteredMovies, query, shorts) =>
     unfilteredMovies.filter((m) => {
       if (query !== '')
@@ -147,10 +161,11 @@ function App() {
       return shorts ? m.duration <= 40 : true;
     });
 
-  const handleSearchMovies = (query, shorts) => {
+  const handleSearchMovies = async (query, shorts) => {
     setIsLoading(true);
     setSearchQuery(query);
     setShortsMovies(shorts);
+    await loadMovies();
     setFilteredMovies(filterMovies(movies, query, shorts));
     setIsLoading(false);
   };
@@ -211,21 +226,8 @@ function App() {
   };
 
   useEffect(() => {
-    const loadMovies = async () => {
-      try {
-        setIsLoading(true);
-        const saved = getMovies();
-        const all = getAllMovies();
-        setSavedMovies(await saved);
-        setMovies(await all);
-        setIsLoading(false);
-      } catch (e) {
-        setMessage(e.message);
-        setIsMessagePopupOpen(true);
-      }
-    };
     if (loggedIn) loadMovies();
-  }, [loggedIn]);
+  }, [loggedIn, loadMovies]);
 
   useEffect(() => {
     const handleEscClose = (e) => {
