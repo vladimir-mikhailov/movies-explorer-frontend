@@ -1,15 +1,7 @@
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import './NotFound.css';
 
-const NotFound = () => {
-  const history = useHistory();
-
-  const handleClick = (e) => {
-    e.preventDefault();
-    history.goBack();
-  };
-
-  return (
+const NotFound = () => (
     <main className='main'>
       <section className='section'>
         <div className='section__container section__container_wide not-found'>
@@ -19,8 +11,7 @@ const NotFound = () => {
           </div>
           <Link
             className='link not-found__link'
-            onClick={handleClick}
-            to={history.location}
+            to='/movies'
           >
             Назад
           </Link>
@@ -28,6 +19,5 @@ const NotFound = () => {
       </section>
     </main>
   );
-};
 
 export default NotFound;
