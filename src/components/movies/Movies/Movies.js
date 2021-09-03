@@ -12,8 +12,25 @@ const Movies = ({
   handleSave,
   checkIfSavedAndGetId,
   searchQuery,
-  shorts
-}) => (
+  handleSearchQueryChange,
+  shorts,
+}) => {
+  let content;
+  if (isLoading) content = <Preloader />;
+  if (!isLoading && !localStorage.getItem('searchQueryMovies'))
+    content = 'Ищите да обрящете!';
+  if (
+    !isLoading &&
+    localStorage.getItem('searchQueryMovies') &&
+    searchQuery === ''
+  )
+    content = 'Нужно ввести ключевое слово';
+  if (!isLoading && searchQuery && searchQuery !== '' && !movies)
+    content = 'Введите ключевое слово и нажмите "Найти';
+  if (!isLoading && searchQuery && searchQuery !== '' && movies?.length === 0)
+    content = 'Ничего не найдено';
+
+  return (
     <>
       <Header inHero={false} />
       <main className='main'>
@@ -23,15 +40,16 @@ const Movies = ({
               placeholder='Фильм'
               handleSubmit={handleSearch}
               searchQuery={searchQuery}
+              handleSearchQueryChange={handleSearchQueryChange}
               shorts={shorts}
             />
           </div>
         </section>
 
-        {isLoading || movies.length === 0 ? (
+        {isLoading || movies?.length === 0 ? (
           <section className='section movies movies_preloader'>
             <div className='section__container section__container_wide'>
-              {isLoading ? <Preloader /> : 'Ничего не найдено'}
+              {content}
             </div>
           </section>
         ) : (
@@ -49,5 +67,6 @@ const Movies = ({
       <Footer />
     </>
   );
+};
 
 export default Movies;

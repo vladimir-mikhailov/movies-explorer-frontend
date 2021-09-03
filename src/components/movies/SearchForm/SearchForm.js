@@ -1,22 +1,20 @@
-import { useState } from 'react';
 import './SearchForm.css';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 
 const SearchForm = ({
   placeholder,
   handleSubmit,
-  searchQuery: query,
+  searchQuery,
+  handleSearchQueryChange,
   shorts,
 }) => {
-  const [searchQuery, setSearchQuery] = useState(query);
-
   const onSubmit = (e) => {
     e.preventDefault();
     handleSubmit(searchQuery);
   };
 
   const handleChange = (e) => {
-    setSearchQuery(e.target.value);
+    handleSearchQueryChange(e.target.value);
     // handleSubmit(e.target.value);
   };
 
