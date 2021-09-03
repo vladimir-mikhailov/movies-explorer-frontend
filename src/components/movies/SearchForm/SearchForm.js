@@ -6,7 +6,9 @@ const SearchForm = ({
   handleSubmit,
   searchQuery,
   handleSearchQueryChange,
+  handleShortsMoviesChange,
   shorts,
+  disabled,
 }) => {
   const onSubmit = (e) => {
     e.preventDefault();
@@ -18,10 +20,6 @@ const SearchForm = ({
     // handleSubmit(e.target.value);
   };
 
-  const handleToggleCheckbox = (shortsOnly) => {
-    handleSubmit(searchQuery, shortsOnly);
-  };
-
   return (
     <form className='search-form' onSubmit={onSubmit}>
       <input
@@ -29,14 +27,18 @@ const SearchForm = ({
         className='search-form__input'
         placeholder={placeholder}
         onChange={handleChange}
-        value={searchQuery}
+        value={searchQuery || ''}
       />
-      <button className='search-form__button' type='submit'>
+      <button
+        className={`search-form__button${disabled ? ' search-form__button_disabled' : ''}`}
+        type='submit'
+        disabled={disabled}
+      >
         Найти
       </button>
       <FilterCheckbox
         label='Короткометражки'
-        onChange={handleToggleCheckbox}
+        onChange={handleShortsMoviesChange}
         shorts={shorts}
       />
     </form>

@@ -13,6 +13,7 @@ const SavedMovies = ({
   checkIfSavedAndGetId,
   searchQuery,
   handleSearchQueryChange,
+  handleShortsMoviesChange,
   shorts,
 }) => (
   <>
@@ -25,6 +26,7 @@ const SavedMovies = ({
             handleSubmit={handleSearch}
             searchQuery={searchQuery}
             handleSearchQueryChange={handleSearchQueryChange}
+            handleShortsMoviesChange={handleShortsMoviesChange}
             shorts={shorts}
           />
         </div>

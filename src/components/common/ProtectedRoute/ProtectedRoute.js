@@ -6,7 +6,7 @@ import './ProtectedRoute.css';
 const ProtectedRoute = ({ component: Component, ...props }) => {
   const { loggedIn } = props;
 
-  const render = useMemo (() => {
+  const component = useMemo (() => {
     if (loggedIn === null) return (
       <main className='main protected-route'>
         <Preloader />
@@ -22,7 +22,7 @@ const ProtectedRoute = ({ component: Component, ...props }) => {
 
 
 
-  return render;
+  return component;
 };
 
 export default ProtectedRoute;

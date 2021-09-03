@@ -59,6 +59,16 @@
   cursor: pointer;
 }
 
+.search-form__button_disabled {
+  background-color: design-scheme.$icon-background-color;
+  color: design-scheme.$secondary-color;
+}
+
+.search-form__button_disabled:hover {
+  opacity: 1;
+  cursor: default;
+}
+
 @media screen and (min-width: 768px) {
   .search-form {
     grid-template-columns: 1fr max-content max-content;

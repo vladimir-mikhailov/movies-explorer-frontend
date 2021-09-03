@@ -26,6 +26,7 @@ import deleteMovie from '../../utils/api/savedMovies/deleteMovie';
 import NotFound from '../errors/NotFound/NotFound';
 import logout from '../../utils/api/user/logout';
 import MessagePopup from '../popups/MessagePopup/MessagePopup';
+import errorMessages from '../../utils/errorMessages';
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(null);
@@ -33,14 +34,15 @@ function App() {
   const [isSaving, setIsSaving] = useState(false);
   const [isMenuPopupOpen, setIsMenuPopupOpen] = useState(false);
   const [isMessagePopupOpen, setIsMessagePopupOpen] = useState(false);
-  const [movies, setMovies] = useState([]);
+  const [movies, setMovies] = useState(null);
   const [savedMovies, setSavedMovies] = useState([]);
-  const [filteredMovies, setFilteredMovies] = useState([]);
+  const [filteredMovies, setFilteredMovies] = useState(null);
   const [filteredSavedMovies, setFilteredSavedMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [shortsMovies, setShortsMovies] = useState(false);
   const [shortsSaved, setShortsSaved] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState(null);
+  const [lastSearchedQuery, setLastSearchedQuery] = useState(null);
   const [searchQuerySaved, setSearchQuerySaved] = useState('');
   const [message, setMessage] = useState('');
 
@@ -63,11 +65,25 @@ function App() {
 
   useEffect(() => isLoggedIn(), []);
 
+  const resetLocalStorageAndStates = () => {
+    localStorage.clear();
+    setMovies(null);
+    setSavedMovies([]);
+    setFilteredMovies(null);
+    setFilteredSavedMovies(null);
+    setShortsMovies(false);
+    setShortsSaved(false);
+    setSearchQuery(null);
+    setSearchQuerySaved('');
+    setMessage('');
+  };
+
   const handleLogin = async ({ email, password }) => {
     try {
       setIsSaving(true);
       await login({ email, password });
       await isLoggedIn();
+      resetLocalStorageAndStates();
       setIsSaving(false);
     } catch (e) {
       setIsSaving(false);
@@ -86,7 +102,7 @@ function App() {
 
       if (newUser) {
         setIsSaving(false);
-        await handleLogin({ name, password });
+        await handleLogin({ email, password });
       }
     } catch (e) {
       setIsSaving(false);
@@ -109,7 +125,7 @@ function App() {
       }
     } catch (e) {
       setIsSaving(false);
-      setMessage(e.message);
+      setMessage(`Проблема с обновлением данных пользователя. Ошибка: ${e.message}`);
       setIsMessagePopupOpen(true);
     }
   };
@@ -121,9 +137,10 @@ function App() {
       if (res) {
         setCurrentUser({});
         setLoggedIn(false);
+        resetLocalStorageAndStates();
       }
     } catch (e) {
-      setMessage(e.message);
+      setMessage(`Проблема с выходом из аккаунта. Ошибка: ${e.message}`);
       setIsMessagePopupOpen(true);
     }
   };
@@ -134,20 +151,6 @@ function App() {
     setMessage('');
   };
 
-  // const loadMovies = async () => {
-  //   try {
-  //     setIsLoading(true);
-  //     const saved = getMovies();
-  //     const all = getAllMovies();
-  //     setSavedMovies(await saved);
-  //     setMovies(await all);
-  //     setIsLoading(false);
-  //   } catch (e) {
-  //     setMessage(e.message);
-  //     setIsMessagePopupOpen(true);
-  //   }
-  // };
-
   const filterMovies = (unfilteredMovies, query, shorts) =>
     unfilteredMovies.filter((m) => {
       if (query !== '')
@@ -157,55 +160,71 @@ function App() {
       return shorts ? m.duration <= 40 : true;
     });
 
-  const getMoviesFromServer = async () => {
-    try {
-      const res = getAllMovies();
-      return await res;
-    } catch (e) {
-      setMessage(
-        `Ошибка загрузки: ${e.message}. Пока такое дело, пробуем искать по сохранённым данным`,
-      );
-      setIsMessagePopupOpen(true);
-      return movies;
-    }
+  const setMoviesToStateAndLocally = (newMovies) => {
+    setMovies(newMovies);
+    localStorage.setItem('movies', JSON.stringify(newMovies));
   };
 
-  const getAndSetMovies = async () => {
-    const all = await getMoviesFromServer();
-    const saved = await getMovies();
-    setMovies(all);
-    localStorage.setItem('movies', JSON.stringify(all));
-    setSavedMovies(saved);
-    localStorage.setItem('savedMovies', JSON.stringify(saved));
-    return { all, saved };
+  const setSavedMoviesToStateAndLocally = (newSavedMovies) => {
+    setSavedMovies(newSavedMovies);
+    localStorage.setItem('savedMovies', JSON.stringify(newSavedMovies));
   };
 
-  const handleSearchMovies = async (query, shorts) => {
-    try {
-      setIsLoading(true);
-      setSearchQuery(query);
-      setShortsMovies(shorts);
-      const { all } = await getAndSetMovies();
-      const moviesFiltered = filterMovies(all, query, shorts);
-      setFilteredMovies(moviesFiltered);
-      localStorage.setItem('filteredMovies', JSON.stringify(moviesFiltered));
-      setIsLoading(false);
-    } catch (e) {
-      console.log(e);
-    }
+  const seFilteredMoviesToStateAndLocally = (newFilteredMovies) => {
+    setFilteredMovies(newFilteredMovies === null ? null : newFilteredMovies);
+    localStorage.setItem(
+      'filteredMovies',
+      newFilteredMovies === null ? '' : JSON.stringify(newFilteredMovies),
+    );
   };
 
-  const handleSearchSavedMovies = (query, shorts) => {
-    setIsLoading(true);
-    setSearchQuerySaved(query);
-    setShortsSaved(shorts);
-    const savedMoviesFiltered = filterMovies(savedMovies, query, shorts);
-    setFilteredSavedMovies(savedMoviesFiltered);
+  const seFilteredSavedMoviesToStateAndLocally = (newFilteredMovies) => {
+    setFilteredSavedMovies(newFilteredMovies);
     localStorage.setItem(
       'filteredSavedMovies',
-      JSON.stringify(savedMoviesFiltered),
+      JSON.stringify(newFilteredMovies),
     );
-    setIsLoading(false);
+  };
+
+  const handleSearchMovies = async (query) => {
+    if (searchQuery === lastSearchedQuery && searchQuery !== null) return;
+
+    if (searchQuery === null || searchQuery === '') {
+      setSearchQuery('');
+      seFilteredMoviesToStateAndLocally(null);
+
+      setLastSearchedQuery(null);
+      localStorage.setItem('lastSearchedQuery', '');
+      return;
+    }
+    if (searchQuery !== '') {
+      try {
+        setIsLoading(true);
+
+        const allMovies = await getAllMovies();
+        setMoviesToStateAndLocally(allMovies);
+
+        const saved = await getMovies();
+        setSavedMoviesToStateAndLocally(saved);
+
+        const moviesFiltered = filterMovies(allMovies, query, shortsMovies);
+
+        setLastSearchedQuery(query);
+        localStorage.setItem('lastSearchedQuery', query);
+
+        seFilteredMoviesToStateAndLocally(moviesFiltered);
+
+        setIsLoading(false);
+      } catch (e) {
+        setMessage(errorMessages.queryError);
+        setIsMessagePopupOpen(true);
+      }
+    }
+  };
+
+  const handleSearchSavedMovies = (query) => {
+    const savedMoviesFiltered = filterMovies(savedMovies, query, shortsSaved);
+    seFilteredSavedMoviesToStateAndLocally(savedMoviesFiltered);
   };
 
   const checkIfSavedAndGetId = (movieFromBase) => {
@@ -236,7 +255,8 @@ function App() {
           year: movie.year || 'Неизвестен',
         });
 
-        setSavedMovies([...savedMovies, res]);
+        const newSavedMovies = [...savedMovies, res];
+        setSavedMoviesToStateAndLocally(newSavedMovies);
 
         return res._id;
       } catch (e) {
@@ -247,7 +267,8 @@ function App() {
 
     try {
       await deleteMovie(savedId);
-      setSavedMovies(savedMovies.filter((m) => m._id !== savedId));
+      const newSavedMovies = savedMovies.filter((m) => m._id !== savedId);
+      setSavedMovies(newSavedMovies);
     } catch (e) {
       setMessage(e.message);
       setIsMessagePopupOpen(true);
@@ -263,6 +284,38 @@ function App() {
   const handleSearchQuerySavedChange = (q) => {
     setSearchQuerySaved(q);
     localStorage.setItem('searchQuerySavedMovies', q);
+  };
+
+  const handleShortsMoviesChange = () => {
+    setShortsMovies(!shortsMovies);
+    localStorage.setItem('shortsMovies', !shortsMovies === true ? 'true' : '');
+    if (
+      filteredMovies?.length > 0 &&
+      (searchQuery === '' || searchQuery === null) &&
+      lastSearchedQuery !== null &&
+      lastSearchedQuery !== ''
+    ) {
+      seFilteredMoviesToStateAndLocally(
+        filterMovies(movies, lastSearchedQuery, !shortsMovies),
+      );
+      return;
+    }
+    if (searchQuery === '' || searchQuery === null) return;
+    seFilteredMoviesToStateAndLocally(
+      filterMovies(movies, searchQuery, !shortsMovies),
+    );
+  };
+
+  const handleShortsSavedMoviesChange = () => {
+    setShortsSaved(!shortsSaved);
+    localStorage.setItem('shortsSaved', !shortsSaved === true ? 'true' : '');
+
+    const newFilteredMovies = filterMovies(
+      savedMovies,
+      searchQuerySaved,
+      !shortsSaved,
+    );
+    seFilteredSavedMoviesToStateAndLocally(newFilteredMovies);
   };
 
   useEffect(() => {
@@ -285,14 +338,17 @@ function App() {
         setSearchQuery(localStorage.getItem('searchQueryMovies'));
       }
 
+      if (localStorage.getItem('lastSearchedQuery')) {
+        setLastSearchedQuery(localStorage.getItem('lastSearchedQuery'));
+      }
+
       if (localStorage.getItem('searchQuerySavedMovies'))
         setSearchQuerySaved(localStorage.getItem('searchQuerySavedMovies'));
 
-      if (localStorage.getItem('shortsMovies'))
-        setShortsMovies(localStorage.getItem('shortsMovies') === 'true');
+      if (localStorage.getItem('shortsMovies') === 'true')
+        setShortsMovies(true);
 
-      if (localStorage.getItem('shortsSaved'))
-        setShortsSaved(localStorage.getItem('shortsSaved') === 'true');
+      if (localStorage.getItem('shortsSaved') === 'true') setShortsSaved(true);
     }
   }, [loggedIn]);
 
@@ -353,6 +409,7 @@ function App() {
                     movies={filteredMovies}
                     searchQuery={searchQuery}
                     handleSearchQueryChange={handleSearchQueryChange}
+                    handleShortsMoviesChange={handleShortsMoviesChange}
                     handleSearch={handleSearchMovies}
                     handleSave={handleSaveAndReturnId}
                     checkIfSavedAndGetId={checkIfSavedAndGetId}
@@ -368,6 +425,7 @@ function App() {
                     movies={filteredSavedMovies || savedMovies}
                     searchQuery={searchQuerySaved}
                     handleSearchQueryChange={handleSearchQuerySavedChange}
+                    handleShortsMoviesChange={handleShortsSavedMoviesChange}
                     handleSearch={handleSearchSavedMovies}
                     handleSave={handleSaveAndReturnId}
                     checkIfSavedAndGetId={checkIfSavedAndGetId}
