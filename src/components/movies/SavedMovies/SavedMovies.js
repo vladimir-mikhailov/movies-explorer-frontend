@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import './SavedMovies.css';
 import Header from '../../common/Header/Header';
 import SearchForm from '../SearchForm/SearchForm';
@@ -16,10 +15,7 @@ const SavedMovies = ({
   handleSearchQueryChange,
   handleShortsMoviesChange,
   shorts,
-}) => {
-  useEffect(() => handleSearch(), [handleSearch]);
-
-  return (
+}) => (
     <>
       <Header inHero={false} />
       <main className='main'>
@@ -59,6 +55,5 @@ const SavedMovies = ({
       <Footer />
     </>
   );
-};
 
 export default SavedMovies;

@@ -1,5 +1,5 @@
-import { useState, useEffect, useCallback } from 'react';
-import { Route, Switch, Redirect, BrowserRouter } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import './App.css';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 import LoggedInContext from '../../contexts/LoggedInContext';
@@ -37,13 +37,14 @@ function App() {
   const [movies, setMovies] = useState(null);
   const [savedMovies, setSavedMovies] = useState([]);
   const [filteredMovies, setFilteredMovies] = useState(null);
-  const [filteredSavedMovies, setFilteredSavedMovies] = useState([]);
+  const [filteredSavedMovies, setFilteredSavedMovies] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [shortsMovies, setShortsMovies] = useState(false);
   const [shortsSaved, setShortsSaved] = useState(false);
   const [searchQuery, setSearchQuery] = useState(null);
   const [lastSearchedQuery, setLastSearchedQuery] = useState(null);
-  const [searchQuerySaved, setSearchQuerySaved] = useState('');
+  const [searchQuerySaved, setSearchQuerySaved] = useState(null);
+  const [lastSearchedQuerySaved, setLastSearchedQuerySaved] = useState(null);
   const [message, setMessage] = useState('');
 
   const isLoggedIn = async () => {
@@ -153,13 +154,14 @@ function App() {
   };
 
   const filterMovies = (unfilteredMovies, query, shorts) =>
-    unfilteredMovies.filter((m) => {
-      if (query !== '')
-        return shorts
+    unfilteredMovies.filter(
+      (m) =>
+        // if (query !== '')
+        shorts
           ? m.nameRU.includes(query) && m.duration <= 40
-          : m.nameRU.includes(query);
-      return shorts ? m.duration <= 40 : true;
-    });
+          : m.nameRU.includes(query),
+      // return shorts ? m.duration <= 40 : true;
+    );
 
   const setMoviesToStateAndLocally = (newMovies) => {
     setMovies(newMovies);
@@ -180,10 +182,10 @@ function App() {
   };
 
   const seFilteredSavedMoviesToStateAndLocally = (newFilteredMovies) => {
-    setFilteredSavedMovies(newFilteredMovies);
+    setFilteredSavedMovies(newFilteredMovies === null ? null : newFilteredMovies);
     localStorage.setItem(
       'filteredSavedMovies',
-      JSON.stringify(newFilteredMovies),
+      newFilteredMovies === null ? '' : JSON.stringify(newFilteredMovies),
     );
   };
 
@@ -223,10 +225,13 @@ function App() {
     }
   };
 
-  const handleSearchSavedMovies = useCallback((query = '') => {
+  const handleSearchSavedMovies = (query = '') => {
+    if (query === lastSearchedQuerySaved) return;
+
+    setLastSearchedQuerySaved(query);
     const savedMoviesFiltered = filterMovies(savedMovies, query, shortsSaved);
     seFilteredSavedMoviesToStateAndLocally(savedMoviesFiltered);
-  },[savedMovies, shortsSaved]);
+  };
 
   const checkIfSavedAndGetId = (movieFromBase) => {
     const foundMovie = savedMovies.find(
@@ -351,6 +356,17 @@ function App() {
 
       if (localStorage.getItem('shortsSaved') === 'true') setShortsSaved(true);
     }
+  }, [loggedIn]);
+
+  useEffect(() => {
+    if (localStorage.getItem('filteredSavedMovies')) return;
+
+    const getSaved = async () => {
+      const res = await getMovies();
+      setSavedMoviesToStateAndLocally(res);
+      seFilteredSavedMoviesToStateAndLocally(res);
+    };
+    if (loggedIn) getSaved();
   }, [loggedIn]);
 
   useEffect(() => {
