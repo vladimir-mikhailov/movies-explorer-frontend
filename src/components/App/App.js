@@ -248,8 +248,9 @@ function App() {
 
     setLastSearchedQuerySaved(query);
 
-    const savedMoviesFiltered = filterMovies(savedMovies, query, shortsSaved);
-    setFilteredSavedMoviesToStateAndLocally(savedMoviesFiltered);
+    setFilteredSavedMoviesToStateAndLocally(
+      filterMovies(savedMovies, query, shortsSaved),
+    );
   };
 
   const checkIfSavedAndGetId = (movieFromBase) => {
@@ -271,11 +272,15 @@ function App() {
           description: movie.description || 'Описание отсутствует',
           director: movie.director || 'Неизвестен',
           duration: movie.duration || '1',
-          image: imageUrl || 'https://api.nomoreparties.co/uploads/750x485_6aa18b04bb.jpeg',
+          image:
+            imageUrl ||
+            'https://api.nomoreparties.co/uploads/750x485_6aa18b04bb.jpeg',
           movieId: movie.id,
           nameEN: movie.nameEN || 'No Name',
           nameRU: movie.nameRU || 'Без Названия',
-          thumbnail: thumbnailUrl || 'https://api.nomoreparties.co/uploads/750x485_6aa18b04bb.jpeg',
+          thumbnail:
+            thumbnailUrl ||
+            'https://api.nomoreparties.co/uploads/750x485_6aa18b04bb.jpeg',
           trailer: movie.trailerLink || 'https://youtube.com',
           year: movie.year || 'Неизвестен',
         });
@@ -291,9 +296,14 @@ function App() {
     }
 
     try {
-      await deleteMovie(savedId);
-      const newSavedMovies = savedMovies.filter((m) => m._id !== savedId);
-      setSavedMovies(newSavedMovies);
+      const res = await deleteMovie(savedId);
+      if (await res) {
+        const newFilteredMovies = savedMovies.filter((m) => m._id !== savedId);
+        setSavedMoviesToStateAndLocally(newFilteredMovies);
+        setFilteredSavedMoviesToStateAndLocally(
+          filterMovies(newFilteredMovies, searchQuerySaved, shortsSaved),
+        );
+      }
     } catch (e) {
       setMessage(e.message);
       setIsMessagePopupOpen(true);
@@ -490,7 +500,7 @@ function App() {
                     component={SavedMovies}
                     loggedIn={loggedIn}
                     isLoading={isLoading}
-                    movies={filteredSavedMovies || savedMovies}
+                    movies={filteredSavedMovies}
                     searchQuery={searchQuerySaved}
                     handleSearchQueryChange={handleSearchQuerySavedChange}
                     handleShortsMoviesChange={handleShortsSavedMoviesChange}
