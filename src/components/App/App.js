@@ -46,6 +46,8 @@ function App() {
   const [searchQuerySaved, setSearchQuerySaved] = useState(null);
   const [lastSearchedQuerySaved, setLastSearchedQuerySaved] = useState(null);
   const [message, setMessage] = useState('');
+  const [lastQuerySentAt, setLastQuerySentAt] = useState(null);
+  const [lastQuerySavedSentAt, setLastQuerySavedSentAt] = useState(null);
 
   const isLoggedIn = async () => {
     try {
@@ -154,14 +156,13 @@ function App() {
   };
 
   const filterMovies = (unfilteredMovies, query, shorts) =>
-    unfilteredMovies.filter(
-      (m) =>
-        // if (query !== '')
-        shorts
+    unfilteredMovies.filter((m) => {
+      if (query !== '' && query !== null)
+        return shorts
           ? m.nameRU.includes(query) && m.duration <= 40
-          : m.nameRU.includes(query),
-      // return shorts ? m.duration <= 40 : true;
-    );
+          : m.nameRU.includes(query);
+      return shorts ? m.duration <= 40 : true;
+    });
 
   const setMoviesToStateAndLocally = (newMovies) => {
     setMovies(newMovies);
@@ -173,7 +174,7 @@ function App() {
     localStorage.setItem('savedMovies', JSON.stringify(newSavedMovies));
   };
 
-  const seFilteredMoviesToStateAndLocally = (newFilteredMovies) => {
+  const setFilteredMoviesToStateAndLocally = (newFilteredMovies) => {
     setFilteredMovies(newFilteredMovies === null ? null : newFilteredMovies);
     localStorage.setItem(
       'filteredMovies',
@@ -181,8 +182,10 @@ function App() {
     );
   };
 
-  const seFilteredSavedMoviesToStateAndLocally = (newFilteredMovies) => {
-    setFilteredSavedMovies(newFilteredMovies === null ? null : newFilteredMovies);
+  const setFilteredSavedMoviesToStateAndLocally = (newFilteredMovies) => {
+    setFilteredSavedMovies(
+      newFilteredMovies === null ? null : newFilteredMovies,
+    );
     localStorage.setItem(
       'filteredSavedMovies',
       newFilteredMovies === null ? '' : JSON.stringify(newFilteredMovies),
@@ -194,7 +197,7 @@ function App() {
 
     if (searchQuery === null || searchQuery === '') {
       setSearchQuery('');
-      seFilteredMoviesToStateAndLocally(null);
+      setFilteredMoviesToStateAndLocally(null);
 
       setLastSearchedQuery(null);
       localStorage.setItem('lastSearchedQuery', '');
@@ -204,22 +207,37 @@ function App() {
       try {
         setIsLoading(true);
 
-        const allMovies = await getAllMovies();
-        setMoviesToStateAndLocally(allMovies);
+        // todo запрос не каждый поиск setLastQuerySentAt
+        const date = Date.now();
 
-        const saved = await getMovies();
-        setSavedMoviesToStateAndLocally(saved);
+        if (
+          lastQuerySentAt === null ||
+          lastQuerySentAt <= date - 1000 * 60 * 60
+        ) {
+          const allMovies = await getAllMovies();
+          setMoviesToStateAndLocally(allMovies);
 
-        const moviesFiltered = filterMovies(allMovies, query, shortsMovies);
+          const saved = await getMovies();
+          setSavedMoviesToStateAndLocally(saved);
+
+          const moviesFiltered = filterMovies(allMovies, query, shortsMovies);
+          setFilteredMoviesToStateAndLocally(moviesFiltered);
+
+          setLastQuerySentAt(date);
+          localStorage.setItem('lastQuerySentAt', date.toString());
+        }
+
+        if (lastQuerySentAt && lastQuerySentAt > date - 1000 * 60 * 60) {
+          const moviesFiltered = filterMovies(movies, query, shortsMovies);
+          setFilteredMoviesToStateAndLocally(moviesFiltered);
+        }
 
         setLastSearchedQuery(query);
         localStorage.setItem('lastSearchedQuery', query);
 
-        seFilteredMoviesToStateAndLocally(moviesFiltered);
-
         setIsLoading(false);
       } catch (e) {
-        setMessage(errorMessages.queryError);
+        setMessage(`${errorMessages.queryError}: ${e.message}`);
         setIsMessagePopupOpen(true);
       }
     }
@@ -229,8 +247,9 @@ function App() {
     if (query === lastSearchedQuerySaved) return;
 
     setLastSearchedQuerySaved(query);
+
     const savedMoviesFiltered = filterMovies(savedMovies, query, shortsSaved);
-    seFilteredSavedMoviesToStateAndLocally(savedMoviesFiltered);
+    setFilteredSavedMoviesToStateAndLocally(savedMoviesFiltered);
   };
 
   const checkIfSavedAndGetId = (movieFromBase) => {
@@ -295,19 +314,22 @@ function App() {
   const handleShortsMoviesChange = () => {
     setShortsMovies(!shortsMovies);
     localStorage.setItem('shortsMovies', !shortsMovies === true ? 'true' : '');
+
     if (
       filteredMovies?.length > 0 &&
       (searchQuery === '' || searchQuery === null) &&
       lastSearchedQuery !== null &&
       lastSearchedQuery !== ''
     ) {
-      seFilteredMoviesToStateAndLocally(
+      setFilteredMoviesToStateAndLocally(
         filterMovies(movies, lastSearchedQuery, !shortsMovies),
       );
       return;
     }
+
     if (searchQuery === '' || searchQuery === null) return;
-    seFilteredMoviesToStateAndLocally(
+
+    setFilteredMoviesToStateAndLocally(
       filterMovies(movies, searchQuery, !shortsMovies),
     );
   };
@@ -316,12 +338,9 @@ function App() {
     setShortsSaved(!shortsSaved);
     localStorage.setItem('shortsSaved', !shortsSaved === true ? 'true' : '');
 
-    const newFilteredMovies = filterMovies(
-      savedMovies,
-      searchQuerySaved,
-      !shortsSaved,
+    setFilteredSavedMoviesToStateAndLocally(
+      filterMovies(savedMovies, searchQuerySaved, !shortsSaved),
     );
-    seFilteredSavedMoviesToStateAndLocally(newFilteredMovies);
   };
 
   useEffect(() => {
@@ -355,19 +374,47 @@ function App() {
         setShortsMovies(true);
 
       if (localStorage.getItem('shortsSaved') === 'true') setShortsSaved(true);
+
+      if (localStorage.getItem('lastQuerySentAt'))
+        setLastQuerySentAt(
+          parseInt(localStorage.getItem('lastQuerySentAt'), 10),
+        );
+
+      if (localStorage.getItem('lastQuerySavedSentAt'))
+        setLastQuerySavedSentAt(
+          parseInt(localStorage.getItem('lastQuerySavedSentAt'), 10),
+        );
     }
   }, [loggedIn]);
 
   useEffect(() => {
-    if (localStorage.getItem('filteredSavedMovies')) return;
+    if (
+      localStorage.getItem('savedMovies') &&
+      JSON.parse(localStorage.getItem('savedMovies')).length > 0
+    ) {
+      setFilteredSavedMoviesToStateAndLocally(
+        JSON.parse(localStorage.getItem('savedMovies')),
+      );
+      return;
+    }
 
-    const getSaved = async () => {
-      const res = await getMovies();
-      setSavedMoviesToStateAndLocally(res);
-      seFilteredSavedMoviesToStateAndLocally(res);
-    };
-    if (loggedIn) getSaved();
-  }, [loggedIn]);
+    const date = Date.now();
+
+    if (
+      lastQuerySavedSentAt === null ||
+      lastQuerySavedSentAt <= date - 1000 * 60 * 60
+    ) {
+      const getSaved = async () => {
+        const res = await getMovies();
+        setSavedMoviesToStateAndLocally(res);
+        setFilteredSavedMoviesToStateAndLocally(res);
+
+        setLastQuerySavedSentAt(date);
+        localStorage.setItem('lastQuerySavedSentAt', date.toString());
+      };
+      if (loggedIn) getSaved();
+    }
+  }, [lastQuerySavedSentAt, loggedIn]);
 
   useEffect(() => {
     const handleEscClose = (e) => {
