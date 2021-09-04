@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import './SavedMovies.css';
 import Header from '../../common/Header/Header';
 import SearchForm from '../SearchForm/SearchForm';
@@ -15,45 +16,49 @@ const SavedMovies = ({
   handleSearchQueryChange,
   handleShortsMoviesChange,
   shorts,
-}) => (
-  <>
-    <Header inHero={false} />
-    <main className='main'>
-      <section className='section'>
-        <div className='section__container section__container_wide'>
-          <SearchForm
-            placeholder='Фильм'
-            handleSubmit={handleSearch}
-            searchQuery={searchQuery}
-            handleSearchQueryChange={handleSearchQueryChange}
-            handleShortsMoviesChange={handleShortsMoviesChange}
-            shorts={shorts}
-          />
-        </div>
-      </section>
+}) => {
+  useEffect(() => handleSearch(), [handleSearch]);
 
-      {isLoading || movies.length === 0 ? (
-        <section className='section saved-movies saved-movies_preloader'>
+  return (
+    <>
+      <Header inHero={false} />
+      <main className='main'>
+        <section className='section'>
           <div className='section__container section__container_wide'>
-            {isLoading ? <Preloader /> : 'Ничего не найдено'}
-          </div>
-        </section>
-      ) : (
-        <section className='section saved-movies'>
-          <div className='section__container section__container_wide saved-movies__container'>
-            <MoviesCardList
-              movies={movies}
-              handleSave={handleSave}
-              typeSaved
-              checkIfSavedAndGetId={checkIfSavedAndGetId}
-              noButton
+            <SearchForm
+              placeholder='Фильм'
+              handleSubmit={handleSearch}
+              searchQuery={searchQuery}
+              handleSearchQueryChange={handleSearchQueryChange}
+              handleShortsMoviesChange={handleShortsMoviesChange}
+              shorts={shorts}
             />
           </div>
         </section>
-      )}
-    </main>
-    <Footer />
-  </>
-);
+
+        {isLoading || movies.length === 0 ? (
+          <section className='section saved-movies saved-movies_preloader'>
+            <div className='section__container section__container_wide'>
+              {isLoading ? <Preloader /> : 'Ничего не найдено'}
+            </div>
+          </section>
+        ) : (
+          <section className='section saved-movies'>
+            <div className='section__container section__container_wide saved-movies__container'>
+              <MoviesCardList
+                movies={movies}
+                handleSave={handleSave}
+                typeSaved
+                checkIfSavedAndGetId={checkIfSavedAndGetId}
+                noButton
+              />
+            </div>
+          </section>
+        )}
+      </main>
+      <Footer />
+    </>
+  );
+};
 
 export default SavedMovies;

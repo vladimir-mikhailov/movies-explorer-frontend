@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Route, Switch, Redirect, BrowserRouter } from 'react-router-dom';
 import './App.css';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
@@ -223,10 +223,10 @@ function App() {
     }
   };
 
-  const handleSearchSavedMovies = (query) => {
+  const handleSearchSavedMovies = useCallback((query = '') => {
     const savedMoviesFiltered = filterMovies(savedMovies, query, shortsSaved);
     seFilteredSavedMoviesToStateAndLocally(savedMoviesFiltered);
-  };
+  },[savedMovies, shortsSaved]);
 
   const checkIfSavedAndGetId = (movieFromBase) => {
     const foundMovie = savedMovies.find(
