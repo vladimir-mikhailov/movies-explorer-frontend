@@ -19,9 +19,6 @@ const Movies = ({
   shorts,
 }) => {
 
-  const disabled = (!isLoading && searchQuery === '' && !movies);
-
-
   const render = useMemo(() => {
 
     const content = () => {
@@ -79,7 +76,6 @@ const Movies = ({
               handleSearchQueryChange={handleSearchQueryChange}
               handleShortsMoviesChange={handleShortsMoviesChange}
               shorts={shorts}
-              disabled={disabled}
             />
           </div>
         </section>

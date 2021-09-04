@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import './SearchForm.css';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 
@@ -8,8 +9,17 @@ const SearchForm = ({
   handleSearchQueryChange,
   handleShortsMoviesChange,
   shorts,
-  disabled,
 }) => {
+  const [disabled, setDisabled] = useState(true);
+
+  useEffect(() => {
+    if (searchQuery === null || searchQuery === '') {
+      setDisabled(true);
+      return;
+    }
+    setDisabled(false);
+  }, [searchQuery]);
+
   const onSubmit = (e) => {
     e.preventDefault();
     handleSubmit(searchQuery);
