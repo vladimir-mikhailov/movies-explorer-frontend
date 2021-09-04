@@ -159,8 +159,9 @@ function App() {
     unfilteredMovies.filter((m) => {
       if (query !== '' && query !== null)
         return shorts
-          ? m.nameRU.includes(query) && m.duration <= 40
-          : m.nameRU.includes(query);
+          ? m.nameRU.toLowerCase().includes(query.toLowerCase()) &&
+              m.duration <= 40
+          : m.nameRU.toLowerCase().includes(query.toLowerCase());
       return shorts ? m.duration <= 40 : true;
     });
 
