@@ -74,7 +74,7 @@ const Profile = ({
                 placeholder='Имя'
                 type='text'
                 className='profile__input'
-                disabled={!isEditionMode}
+                disabled={!isEditionMode || isSaving}
                 onChange={handleChange}
                 value={values.name || ''}
                 minLength='2'
@@ -97,7 +97,7 @@ const Profile = ({
                 name='email'
                 placeholder='Email'
                 className='profile__input'
-                disabled={!isEditionMode}
+                disabled={!isEditionMode || isSaving}
                 onChange={handleChange}
                 value={values.email || ''}
                 required
@@ -114,7 +114,7 @@ const Profile = ({
           <div className='profile-button-container'>
             <button
               className={`profile__button profile__button_type_link link${
-                (!isFormValid || disabled) ? ' profile__button_disabled' : ''
+                (isEditionMode && (!isFormValid || disabled)) ? ' profile__button_disabled' : ''
               }`}
               type='submit'
               disabled={isEditionMode && (!isFormValid || disabled)}

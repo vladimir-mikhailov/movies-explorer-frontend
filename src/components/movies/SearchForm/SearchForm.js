@@ -9,6 +9,7 @@ const SearchForm = ({
   handleSearchQueryChange,
   handleShortsMoviesChange,
   shorts,
+  isLoading,
 }) => {
   const [disabled, setDisabled] = useState(true);
 
@@ -38,9 +39,12 @@ const SearchForm = ({
         placeholder={placeholder}
         onChange={handleChange}
         value={searchQuery || ''}
+        disabled={isLoading}
       />
       <button
-        className={`search-form__button${disabled ? ' search-form__button_disabled' : ''}`}
+        className={`search-form__button${
+          disabled ? ' search-form__button_disabled' : ''
+        }`}
         type='submit'
         disabled={disabled}
       >

@@ -28,6 +28,7 @@ const SavedMovies = ({
               handleSearchQueryChange={handleSearchQueryChange}
               handleShortsMoviesChange={handleShortsMoviesChange}
               shorts={shorts}
+              isLoading={isLoading}
             />
           </div>
         </section>

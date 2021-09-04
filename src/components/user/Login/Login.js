@@ -36,6 +36,7 @@ const Login = ({ handleLogin, isSaving, message, setMessage }) => {
               onchange={handleChange}
               required
               errorMessage={errors.email}
+              disabled={isSaving}
             />
             <Input
               type='password'
@@ -48,6 +49,7 @@ const Login = ({ handleLogin, isSaving, message, setMessage }) => {
               minLength={8}
               maxLength={100}
               errorMessage={errors.password}
+              disabled={isSaving}
             />
           </div>
           <AuthButton
