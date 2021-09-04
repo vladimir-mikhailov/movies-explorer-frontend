@@ -1,32 +1,24 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import AuthForm from '../AuthForm/AuthForm';
 import AuthHeader from '../AuthHeader/AuthHeader';
 import AuthButton from '../AuthButton/AuthButton';
 import Input from '../Input/Input';
 import './Login.css';
+import { useFormValidation } from '../../../hooks/useFormValidation';
 
 const Login = ({ handleLogin, isSaving, message, setMessage }) => {
-  const [isFormValid, setIsFormValid] = useState(true);
-  const [values, setValues] = useState({});
-  const [errors, setErrors] = useState({});
+  const { values, errors, isFormValid, handleChange, resetForm } =
+    useFormValidation();
 
   useEffect(() => {
-    setIsFormValid(true);
-    setErrors({});
+    resetForm();
     setMessage('');
     return () => setMessage('');
-  }, [setMessage]);
+  }, [setMessage, resetForm]);
 
   const onSubmit = (e) => {
     e.preventDefault();
     handleLogin(values);
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setValues({ ...values, [name]: value });
-    setErrors({ ...errors, [name]: e.target.validationMessage });
-    setIsFormValid(e.target.closest('form').checkValidity());
   };
 
   return (

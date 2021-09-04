@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import './Profile.css';
 import Header from '../../common/Header/Header';
 import CurrentUserContext from '../../../contexts/CurrentUserContext';
+import { useFormValidation } from '../../../hooks/useFormValidation';
 
 const Profile = ({
   handleUpdateUser,
@@ -10,9 +11,10 @@ const Profile = ({
   isSaving,
 }) => {
   const user = useContext(CurrentUserContext);
-  const [isFormValid, setIsFormValid] = useState(true);
-  const [values, setValues] = useState(user);
-  const [errors, setErrors] = useState({});
+
+  const { values, errors, isFormValid, handleChange, resetForm } =
+    useFormValidation();
+
   const [isEditionMode, setIsEditionMode] = useState(false);
   const [buttonCaption, setButtonCaption] = useState('Редактировать');
 
@@ -30,10 +32,8 @@ const Profile = ({
   }, [isSaving, isEditionMode]);
 
   useEffect(() => {
-    setValues(user);
-    setIsFormValid(true);
-    setErrors({});
-  }, [user]);
+    resetForm(user, true);
+  }, [resetForm, user]);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -47,14 +47,7 @@ const Profile = ({
       return;
     }
     setIsEditionMode(true);
-    setIsFormValid(e.target.closest('form').checkValidity());
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setValues({ ...values, [name]: value });
-    setErrors({ ...errors, [name]: e.target.validationMessage });
-    setIsFormValid(e.target.closest('form').checkValidity());
+    resetForm(user, true);
   };
 
   return (
