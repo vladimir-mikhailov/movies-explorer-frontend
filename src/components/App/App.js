@@ -65,25 +65,25 @@ function App() {
 
   useEffect(() => isLoggedIn(), []);
 
-  const resetLocalStorageAndStates = () => {
-    localStorage.clear();
-    setMovies(null);
-    setSavedMovies([]);
-    setFilteredMovies(null);
-    setFilteredSavedMovies(null);
-    setShortsMovies(false);
-    setShortsSaved(false);
-    setSearchQuery(null);
-    setSearchQuerySaved('');
-    setMessage('');
-  };
+  // const resetStates = () => {
+  //   // localStorage.clear();
+  //   setMovies(null);
+  //   setSavedMovies([]);
+  //   setFilteredMovies(null);
+  //   setFilteredSavedMovies(null);
+  //   setShortsMovies(false);
+  //   setShortsSaved(false);
+  //   setSearchQuery(null);
+  //   setSearchQuerySaved('');
+  //   setMessage('');
+  // };
 
   const handleLogin = async ({ email, password }) => {
     try {
       setIsSaving(true);
       await login({ email, password });
       await isLoggedIn();
-      resetLocalStorageAndStates();
+      // resetStates();
       setIsSaving(false);
     } catch (e) {
       setIsSaving(false);
@@ -138,7 +138,7 @@ function App() {
       if (res) {
         setCurrentUser({});
         setLoggedIn(false);
-        resetLocalStorageAndStates();
+        // resetStates();
       }
     } catch (e) {
       setMessage(`Проблема с выходом из аккаунта. Ошибка: ${e.message}`);
