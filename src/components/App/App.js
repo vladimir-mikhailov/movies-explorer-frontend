@@ -287,6 +287,9 @@ function App() {
 
         const newSavedMovies = [...savedMovies, res];
         setSavedMoviesToStateAndLocally(newSavedMovies);
+        setFilteredSavedMoviesToStateAndLocally(
+          filterMovies(newSavedMovies, searchQuerySaved, shortsSaved),
+        );
 
         return res._id;
       } catch (e) {
