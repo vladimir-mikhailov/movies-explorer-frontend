@@ -6,11 +6,19 @@ const AuthButton = ({
   spanText,
   linkText,
   linkUrl,
+  message,
   disabled,
-  className
+  className,
 }) => (
   <div className={`auth-button ${className}`}>
-    <button className={`auth-button__button${disabled ? ' auth-button__button_disabled' : ''}`} type='submit' disabled={disabled}>
+    <span className='auth-button__message'>{message}</span>
+    <button
+      className={`auth-button__button${
+        disabled ? ' auth-button__button_disabled' : ''
+      }`}
+      type='submit'
+      disabled={disabled}
+    >
       {buttonText}
     </button>
     <div className='auth-button__link-container'>

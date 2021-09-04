@@ -5,7 +5,7 @@ import AuthButton from '../AuthButton/AuthButton';
 import Input from '../Input/Input';
 import './Login.css';
 
-const Login = ({ handleLogin, isSaving }) => {
+const Login = ({ handleLogin, isSaving, message, setMessage }) => {
   const [isFormValid, setIsFormValid] = useState(true);
   const [values, setValues] = useState({});
   const [errors, setErrors] = useState({});
@@ -13,7 +13,9 @@ const Login = ({ handleLogin, isSaving }) => {
   useEffect(() => {
     setIsFormValid(true);
     setErrors({});
-  }, []);
+    setMessage('');
+    return () => setMessage('');
+  }, [setMessage]);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -62,6 +64,8 @@ const Login = ({ handleLogin, isSaving }) => {
             spanText='Ещё не зарегистрированы?'
             linkText='Регистрация'
             linkUrl='/signup'
+            message={message}
+            setMessage={setMessage}
             disabled={!isFormValid}
           />
         </AuthForm>

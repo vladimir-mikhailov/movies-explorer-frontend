@@ -9,6 +9,7 @@ const MoviesCardList = ({
   handleSave,
   typeSaved,
   checkIfSavedAndGetId,
+  noButton,
 }) => {
   const [moviesQuantity, setMoviesQuantity] = useState(5);
   const [quantifier, setQuantifier] = useState(2);
@@ -45,7 +46,7 @@ const MoviesCardList = ({
   return (
     <>
       <ul className='movies-card-list'>
-        {movies.slice(0, moviesQuantity).map((m) => (
+        {movies.slice(0, noButton ? movies.length : moviesQuantity).map((m) => (
           <li className='movies-card-list__list-item' key={m.id || m.movieId}>
             <MoviesCard
               movie={m}
@@ -56,7 +57,7 @@ const MoviesCardList = ({
           </li>
         ))}
       </ul>
-      {showMoreButton && <ShowMoreButton onClick={showMore} />}
+      {!noButton && showMoreButton && <ShowMoreButton onClick={showMore} />}
     </>
   );
 };

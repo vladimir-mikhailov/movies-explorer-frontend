@@ -4,7 +4,11 @@ import './Profile.css';
 import Header from '../../common/Header/Header';
 import CurrentUserContext from '../../../contexts/CurrentUserContext';
 
-const Profile = ({ handleUpdateUser, handleLogout, isSaving }) => {
+const Profile = ({
+  handleUpdateUser,
+  handleLogout,
+  isSaving,
+}) => {
   const user = useContext(CurrentUserContext);
   const [isFormValid, setIsFormValid] = useState(true);
   const [values, setValues] = useState(user);
@@ -83,7 +87,7 @@ const Profile = ({ handleUpdateUser, handleLogout, isSaving }) => {
             >
               {errors.name}
             </span>
-            <label htmlFor='name' className='profile__input-label'>
+            <label htmlFor='name' className={`profile__input-label${isEditionMode ? ' profile__input-label_active' : ''}`}>
               <span className='profile__input-label-caption'>Email</span>
               <input
                 type='email'

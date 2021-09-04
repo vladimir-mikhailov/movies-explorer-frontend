@@ -5,19 +5,23 @@ import AuthButton from '../AuthButton/AuthButton';
 import Input from '../Input/Input';
 import './Register.css';
 
-const Register = ({ handleRegister, isSaving }) => {
+const Register = ({ handleRegister, isSaving, message, setMessage }) => {
   const [isFormValid, setIsFormValid] = useState(true);
   const [values, setValues] = useState({});
   const [errors, setErrors] = useState({});
 
+  const namePattern = /^[A-Za-zА-Яа-яЁё\s-]+$/;
+
   useEffect(() => {
     setIsFormValid(true);
     setErrors({});
-  }, []);
+    setMessage('');
+    return () => setMessage('');
+  }, [setMessage]);
 
   const onSubmit = (e) => {
-    e.preventDefault();
-    handleRegister(values);
+      e.preventDefault();
+      handleRegister(values);
   };
 
   const handleChange = (e) => {
@@ -42,6 +46,7 @@ const Register = ({ handleRegister, isSaving }) => {
               onchange={handleChange}
               required
               errorMessage={errors.name}
+              pattern={namePattern.toString().slice(1, -1)}
             />
             <Input
               type='email'
@@ -72,6 +77,8 @@ const Register = ({ handleRegister, isSaving }) => {
             spanText='Уже зарегистрированы?'
             linkText='Войти'
             linkUrl='/signin'
+            message={message}
+            setMessage={setMessage}
             disabled={!isFormValid}
           />
         </AuthForm>

@@ -46,6 +46,7 @@ const SavedMovies = ({
               handleSave={handleSave}
               typeSaved
               checkIfSavedAndGetId={checkIfSavedAndGetId}
+              noButton
             />
           </div>
         </section>

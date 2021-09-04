@@ -90,7 +90,7 @@ function App() {
       setCurrentUser({});
       setLoggedIn(false);
       setMessage(e.message);
-      setIsMessagePopupOpen(true);
+      // setIsMessagePopupOpen(true);
     }
   };
 
@@ -107,7 +107,7 @@ function App() {
     } catch (e) {
       setIsSaving(false);
       setMessage(e.message);
-      setIsMessagePopupOpen(true);
+      // setIsMessagePopupOpen(true);
     }
   };
 
@@ -125,7 +125,8 @@ function App() {
       }
     } catch (e) {
       setIsSaving(false);
-      setMessage(`Проблема с обновлением данных пользователя. Ошибка: ${e.message}`);
+      setMessage(e.message);
+      await isLoggedIn();
       setIsMessagePopupOpen(true);
     }
   };
@@ -378,6 +379,8 @@ function App() {
                       handleRegister={handleRegister}
                       isSaving={isSaving}
                       isPopup={false}
+                      message={message}
+                      setMessage={setMessage}
                     />
                   </Route>
 
@@ -387,6 +390,8 @@ function App() {
                       handleLogin={handleLogin}
                       isSaving={isSaving}
                       isPopup={false}
+                      message={message}
+                      setMessage={setMessage}
                     />
                   </Route>
 

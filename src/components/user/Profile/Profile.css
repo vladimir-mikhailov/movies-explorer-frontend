@@ -44,6 +44,10 @@
   padding: 0;
 }
 
+.profile__input-label_active {
+  border-top-color: #4285F4;
+}
+
 .profile__input {
   display: flex;
   background: none;
@@ -51,7 +55,11 @@
   outline: none;
   text-align: end;
   width: 100%;
-  max-width: 122px;
+  max-width: 200px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  box-sizing: border-box;
   font-weight: 400;
   font-size: 11px;
   line-height: 13px;
@@ -60,10 +68,6 @@
 
 .profile__input:focus {
   font-weight: 500;
-}
-
-.profile__input:disabled {
-  color: #FFF;
 }
 
 .profile__input-error {
@@ -130,6 +134,10 @@
 
   .profile__heading {
     margin-bottom: 96px;
+  }
+
+  .profile__input {
+    max-width: 300px;
   }
 }
 @media screen and (min-width: 1280px) {

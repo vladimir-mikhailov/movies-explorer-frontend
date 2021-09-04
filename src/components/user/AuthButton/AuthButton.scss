@@ -11,6 +11,12 @@
   margin-bottom: 30px;
 }
 
+.auth-button__message {
+  color: design-scheme.$error-color;
+  margin-bottom: 7px;
+  text-align: center;
+}
+
 .auth-button__button {
   width: 100%;
   border: none;
