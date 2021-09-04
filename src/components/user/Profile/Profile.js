@@ -16,6 +16,7 @@ const Profile = ({
     useFormValidation();
 
   const [isEditionMode, setIsEditionMode] = useState(false);
+  const [disabled, setDisabled] = useState(false);
   const [buttonCaption, setButtonCaption] = useState('Редактировать');
 
   useEffect(() => {
@@ -47,8 +48,16 @@ const Profile = ({
       return;
     }
     setIsEditionMode(true);
-    resetForm(user, true);
+    resetForm(user, false);
   };
+
+  useEffect(() => {
+    if (values.name === user.name && user.email === values.email) {
+      setDisabled(true);
+      return;
+    }
+    setDisabled(false);
+  }, [user.email, user.name, values.email, values.name]);
 
   return (
     <>
@@ -105,10 +114,10 @@ const Profile = ({
           <div className='profile-button-container'>
             <button
               className={`profile__button profile__button_type_link link${
-                !isFormValid ? ' profile__button_disabled' : ''
+                (!isFormValid || disabled) ? ' profile__button_disabled' : ''
               }`}
               type='submit'
-              disabled={isEditionMode && !isFormValid}
+              disabled={isEditionMode && (!isFormValid || disabled)}
             >
               {buttonCaption}
             </button>
