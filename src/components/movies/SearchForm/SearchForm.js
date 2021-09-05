@@ -1,14 +1,25 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './SearchForm.css';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 
 const SearchForm = ({
   placeholder,
   handleSubmit,
-  searchQuery: query,
+  searchQuery,
+  handleSearchQueryChange,
+  handleShortsMoviesChange,
   shorts,
+  isLoading,
 }) => {
-  const [searchQuery, setSearchQuery] = useState(query);
+  const [disabled, setDisabled] = useState(true);
+
+  useEffect(() => {
+    if (searchQuery === null || searchQuery === '') {
+      setDisabled(true);
+      return;
+    }
+    setDisabled(false);
+  }, [searchQuery]);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -16,12 +27,8 @@ const SearchForm = ({
   };
 
   const handleChange = (e) => {
-    setSearchQuery(e.target.value);
+    handleSearchQueryChange(e.target.value);
     // handleSubmit(e.target.value);
-  };
-
-  const handleToggleCheckbox = (shortsOnly) => {
-    handleSubmit(searchQuery, shortsOnly);
   };
 
   return (
@@ -31,14 +38,21 @@ const SearchForm = ({
         className='search-form__input'
         placeholder={placeholder}
         onChange={handleChange}
-        value={searchQuery}
+        value={searchQuery || ''}
+        disabled={isLoading}
       />
-      <button className='search-form__button' type='submit'>
+      <button
+        className={`search-form__button${
+          disabled ? ' search-form__button_disabled' : ''
+        }`}
+        type='submit'
+        disabled={disabled}
+      >
         Найти
       </button>
       <FilterCheckbox
         label='Короткометражки'
-        onChange={handleToggleCheckbox}
+        onChange={handleShortsMoviesChange}
         shorts={shorts}
       />
     </form>

@@ -3,13 +3,20 @@ import { Link } from 'react-router-dom';
 import './Profile.css';
 import Header from '../../common/Header/Header';
 import CurrentUserContext from '../../../contexts/CurrentUserContext';
+import { useFormValidation } from '../../../hooks/useFormValidation';
 
-const Profile = ({ handleUpdateUser, handleLogout, isSaving }) => {
+const Profile = ({
+  handleUpdateUser,
+  handleLogout,
+  isSaving,
+}) => {
   const user = useContext(CurrentUserContext);
-  const [isFormValid, setIsFormValid] = useState(true);
-  const [values, setValues] = useState(user);
-  const [errors, setErrors] = useState({});
+
+  const { values, errors, isFormValid, handleChange, resetForm } =
+    useFormValidation();
+
   const [isEditionMode, setIsEditionMode] = useState(false);
+  const [disabled, setDisabled] = useState(false);
   const [buttonCaption, setButtonCaption] = useState('Редактировать');
 
   useEffect(() => {
@@ -26,10 +33,8 @@ const Profile = ({ handleUpdateUser, handleLogout, isSaving }) => {
   }, [isSaving, isEditionMode]);
 
   useEffect(() => {
-    setValues(user);
-    setIsFormValid(true);
-    setErrors({});
-  }, [user]);
+    resetForm(user, true);
+  }, [resetForm, user]);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -43,15 +48,16 @@ const Profile = ({ handleUpdateUser, handleLogout, isSaving }) => {
       return;
     }
     setIsEditionMode(true);
-    setIsFormValid(e.target.closest('form').checkValidity());
+    resetForm(user, false);
   };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setValues({ ...values, [name]: value });
-    setErrors({ ...errors, [name]: e.target.validationMessage });
-    setIsFormValid(e.target.closest('form').checkValidity());
-  };
+  useEffect(() => {
+    if (values.name === user.name && user.email === values.email) {
+      setDisabled(true);
+      return;
+    }
+    setDisabled(false);
+  }, [user.email, user.name, values.email, values.name]);
 
   return (
     <>
@@ -68,7 +74,7 @@ const Profile = ({ handleUpdateUser, handleLogout, isSaving }) => {
                 placeholder='Имя'
                 type='text'
                 className='profile__input'
-                disabled={!isEditionMode}
+                disabled={!isEditionMode || isSaving}
                 onChange={handleChange}
                 value={values.name || ''}
                 minLength='2'
@@ -83,7 +89,7 @@ const Profile = ({ handleUpdateUser, handleLogout, isSaving }) => {
             >
               {errors.name}
             </span>
-            <label htmlFor='name' className='profile__input-label'>
+            <label htmlFor='name' className={`profile__input-label${isEditionMode ? ' profile__input-label_active' : ''}`}>
               <span className='profile__input-label-caption'>Email</span>
               <input
                 type='email'
@@ -91,7 +97,7 @@ const Profile = ({ handleUpdateUser, handleLogout, isSaving }) => {
                 name='email'
                 placeholder='Email'
                 className='profile__input'
-                disabled={!isEditionMode}
+                disabled={!isEditionMode || isSaving}
                 onChange={handleChange}
                 value={values.email || ''}
                 required
@@ -108,10 +114,10 @@ const Profile = ({ handleUpdateUser, handleLogout, isSaving }) => {
           <div className='profile-button-container'>
             <button
               className={`profile__button profile__button_type_link link${
-                !isFormValid ? ' profile__button_disabled' : ''
+                (isEditionMode && (!isFormValid || disabled)) ? ' profile__button_disabled' : ''
               }`}
               type='submit'
-              disabled={isEditionMode && !isFormValid}
+              disabled={isEditionMode && (!isFormValid || disabled)}
             >
               {buttonCaption}
             </button>

@@ -41,9 +41,10 @@
   margin: 20px 20px 0 0;
   border: none;
   outline: none;
-  background: url(../../../images/button-close-min.svg);
-  width: 32px;
-  height: 32px;
+  background: url(../../../images/button-close-min.svg) no-repeat center center;
+  width: 23px;
+  height: 23px;
+  padding: 0;
   background-size: contain;
   cursor: pointer;
   display: flex;

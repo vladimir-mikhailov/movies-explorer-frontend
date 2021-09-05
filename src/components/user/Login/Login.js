@@ -1,30 +1,24 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import AuthForm from '../AuthForm/AuthForm';
 import AuthHeader from '../AuthHeader/AuthHeader';
 import AuthButton from '../AuthButton/AuthButton';
 import Input from '../Input/Input';
 import './Login.css';
+import { useFormValidation } from '../../../hooks/useFormValidation';
 
-const Login = ({ handleLogin, isSaving }) => {
-  const [isFormValid, setIsFormValid] = useState(true);
-  const [values, setValues] = useState({});
-  const [errors, setErrors] = useState({});
+const Login = ({ handleLogin, isSaving, message, setMessage }) => {
+  const { values, errors, isFormValid, handleChange, resetForm } =
+    useFormValidation();
 
   useEffect(() => {
-    setIsFormValid(true);
-    setErrors({});
-  }, []);
+    resetForm();
+    setMessage('');
+    return () => setMessage('');
+  }, [setMessage, resetForm]);
 
   const onSubmit = (e) => {
     e.preventDefault();
     handleLogin(values);
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setValues({ ...values, [name]: value });
-    setErrors({ ...errors, [name]: e.target.validationMessage });
-    setIsFormValid(e.target.closest('form').checkValidity());
   };
 
   return (
@@ -42,6 +36,7 @@ const Login = ({ handleLogin, isSaving }) => {
               onchange={handleChange}
               required
               errorMessage={errors.email}
+              disabled={isSaving}
             />
             <Input
               type='password'
@@ -54,6 +49,7 @@ const Login = ({ handleLogin, isSaving }) => {
               minLength={8}
               maxLength={100}
               errorMessage={errors.password}
+              disabled={isSaving}
             />
           </div>
           <AuthButton
@@ -62,6 +58,8 @@ const Login = ({ handleLogin, isSaving }) => {
             spanText='Ещё не зарегистрированы?'
             linkText='Регистрация'
             linkUrl='/signup'
+            message={message}
+            setMessage={setMessage}
             disabled={!isFormValid}
           />
         </AuthForm>

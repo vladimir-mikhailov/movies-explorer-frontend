@@ -37,6 +37,14 @@
   font-weight: 400;
   font-size: 12px;
   line-height: 15px;
+  background: none;
+  border: none;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.not-found__link:hover {
+  cursor: pointer;
 }
 
 @media screen and (min-width: 768px) {

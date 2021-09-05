@@ -12,14 +12,14 @@ const Input = ({
   maxLength,
   required,
   errorMessage,
+  pattern,
+  disabled
 }) => {
   const errorClassName = errorMessage
     ? 'input__error input__error_visible'
     : 'input__error';
 
-  const inputClassName = errorMessage
-    ? 'input input_type_error'
-    : 'input';
+  const inputClassName = errorMessage ? 'input input_type_error' : 'input';
 
   return (
     <>
@@ -36,6 +36,8 @@ const Input = ({
           minLength={minLength}
           maxLength={maxLength}
           required={required}
+          pattern={pattern}
+          disabled={disabled}
         />
       </label>
       <span className={errorClassName}>{errorMessage}</span>
